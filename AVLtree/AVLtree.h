@@ -1,9 +1,14 @@
 //
 // Created by Dell on 30/04/2020.
 //
+#define LEAF_HEIGHT 1
 
 #ifndef AVLTREE_AVLTREE_H
 #define AVLTREE_AVLTREE_H
+
+#include <iostream>
+
+using std::exception;
 
 typedef enum AVLResult_t {
     SUCCESS=1,
@@ -40,6 +45,16 @@ class AVLtree {
     AVLResult LRroll();
     AVLResult RLroll();
 
+    void updateHeightFrom(AVLNode* root,T* key){
+        if (root->leftSon->key==key||root->rightSon->key==key){
+
+        }
+
+
+        if (root->key == key) return;
+        updateHeightFrom();
+    }
+
     public:
     explicit AVLtree(){
         root = nullptr;
@@ -57,17 +72,68 @@ class AVLtree {
         ~AVLtree(root->rightSon);
     };
 
-    AVLResult insert(T* key){
-
+    AVLNode* insert(T* key){
+        if (key==nullptr){
+            throw BadParameters();
+        }
+        AVLNode* current = root;
+        while (current!= nullptr){
+            if (current->key==key)
+                throw AlreadyExist();
+            if (current->key<key) {
+                if (current->rightSon==nullptr){
+                    AVLNode* newAvlNode=new AVLNode(key,LEAF_HEIGHT,current, nullptr, nullptr);
+                    current->rightSon=newAvlNode;
+                    return newAvlNode;
+                }
+                current=current->rightSon;
+            }
+            else {
+                if (current->leftSon== nullptr){
+                    AVLNode* newAvlNode =new AVLNode(key,LEAF_HEIGHT,current, nullptr, nullptr);
+                    current->leftSon=newAvlNode;
+                    return newAvlNode;
+                }
+                current=current->leftSon;
+            }
+        }
+        // we need to do a roll
     }
 
     AVLResult erase(T* key){
-
+        if (key==nullptr){
+            throw BadParameters();
+        }
+        AVLNode* current = root;
+        while (current!= nullptr){
+            if (current->key==key){
+                delete(current);
+            }
+            if (current->key<key)
+                current=current->rightSon;
+            else current=current->leftSon;
+        }
+        throw NotFound();
     }
 
-    AVLResult find (T* key){
-
+    AVLNode* find (T* key){
+        if (key==nullptr){
+            throw BadParameters();
+        }
+        AVLNode* current = root;
+        while (current!= nullptr){
+            if (current->key==key)
+                return current;
+            if (current->key<key)
+                current=current->rightSon;
+            else current=current->leftSon;
+        }
+        throw NotFound();
     }
+
+    class NotFound : public exception{};
+    class BadParameters : public  exception{};
+    class AlreadyExist : public exception{};
 };
 
 

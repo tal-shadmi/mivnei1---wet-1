@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Dell/CLionProjects/AVLtree
+# Install script for directory: C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Dell/CLionProjects/AVLtree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
