@@ -46,13 +46,17 @@ class AVLtree {
     AVLResult RLroll();
 
     void updateHeightFrom(AVLNode* root,T* key){
-        if (root->leftSon->key==key||root->rightSon->key==key){
-
-        }
-
-
         if (root->key == key) return;
-        updateHeightFrom();
+        if (root->leftSon->key<key){
+            updateHeightFrom(root->rightSon,key);
+        }
+        else {
+            updateHeightFrom(root->leftSon,key);
+        }
+        if (root->leftSon->height>root->rightSon->height){
+            root->height=root->leftSon->height+1;
+        }
+        else root->height=root->rightSon->height+1;
     }
 
     public:
