@@ -15,20 +15,25 @@ typedef enum AVLResult_t {
     FAILURE=0
 }AVLResult;
 
+typedef enum AVLRoll_t{
+    NO_ROLL=0,
+
+}AVLRoll;
+
 template <class T>
 class AVLtree {
 
     class AVLNode{
         T* key;
-        int height;
         AVLNode* father;
         AVLNode* rightSon;
         AVLNode* leftSon;
+        int height;
 
         public:
         explicit AVLNode() = delete;
-        AVLNode(T* key,int height,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon):
-                key(key),height(height),father(father),rightSon(rightSon),leftSon(leftSon){}
+        AVLNode(T* key,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
+                key(key),father(father),rightSon(rightSon),leftSon(leftSon),height(height){}
         ~AVLNode() = default;
         friend bool operator<(AVLNode &node1,AVLNode &node2){
             return  node1.key<node2.key;
@@ -45,18 +50,33 @@ class AVLtree {
     AVLResult LRroll();
     AVLResult RLroll();
 
-    void updateHeightFrom(AVLNode* root,T* key){
+    /*
+     * recursive option from the root to the key and back
+     *
+    void updateHeightsFrom(AVLNode* current,T* key){
         if (root->key == key) return;
         if (root->leftSon->key<key){
-            updateHeightFrom(root->rightSon,key);
+            updateHeightsFrom(root->rightSon,key);
         }
         else {
-            updateHeightFrom(root->leftSon,key);
+            updateHeightsFrom(root->leftSon,key);
         }
         if (root->leftSon->height>root->rightSon->height){
             root->height=root->leftSon->height+1;
         }
         else root->height=root->rightSon->height+1;
+    }
+    */
+
+    void updateHeightsFrom(AVLNode* leaf){
+        AVLNode* current = leaf->father;
+        while (current->father!= nullptr){
+            if (current->leftSon->height>current->rightSon->height){
+                current->height=current->leftSon->height+1;
+            }
+            else current->height=current->rightSon->height+1;
+            current=current->father;
+        }
     }
 
     public:
@@ -69,14 +89,19 @@ class AVLtree {
     AVLtree (const AVLtree &avltree)= delete;
 
     ~AVLtree(){
-        if(root->rightSon == nullptr && root->leftSon == nullptr){
-            ~AVLNode();
+        // we need to do postorder and delete the nodes
+        AVLNode* current = root;
+        if(current->rightSon == nullptr && current->leftSon == nullptr){
+            delete(current);
         }
-        ~AVLtree(root->leftSon);
-        ~AVLtree(root->rightSon);
+        ~AVLtree(current->leftSon);
+        ~AVLtree(current->rightSon);
     };
 
     AVLNode* insert(T* key){
+        if (root== nullptr){
+            root=new AVLNode(key,LEAF_HEIGHT, nullptr, nullptr, nullptr);
+        }
         if (key==nullptr){
             throw BadParameters();
         }
@@ -86,7 +111,7 @@ class AVLtree {
                 throw AlreadyExist();
             if (current->key<key) {
                 if (current->rightSon==nullptr){
-                    AVLNode* newAvlNode=new AVLNode(key,LEAF_HEIGHT,current, nullptr, nullptr);
+                    AVLNode* newAvlNode=new AVLNode(key,current, nullptr, nullptr);
                     current->rightSon=newAvlNode;
                     return newAvlNode;
                 }
@@ -94,13 +119,15 @@ class AVLtree {
             }
             else {
                 if (current->leftSon== nullptr){
-                    AVLNode* newAvlNode =new AVLNode(key,LEAF_HEIGHT,current, nullptr, nullptr);
+                    AVLNode* newAvlNode =new AVLNode(key,current, nullptr, nullptr);
                     current->leftSon=newAvlNode;
                     return newAvlNode;
                 }
                 current=current->leftSon;
             }
         }
+        updateHeightsFrom(current);
+        int roll=chooseRoll(root);
         // we need to do a roll
     }
 
