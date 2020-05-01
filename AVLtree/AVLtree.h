@@ -329,8 +329,13 @@ class AVLtree {
                     } else {
                         current->father->leftSon=current->leftSon;
                         current->leftSon->father=current->father;
-                        updateHeights(current->leftSon);
-                        roll(current->leftSon);
+                        if (current->leftSon== nullptr){
+                            updateHeights(current->father);
+                            roll(current->father);
+                        } else {
+                            updateHeights(current->leftSon);
+                            roll(current->leftSon);
+                        }
                     }
                 } else {
                     if (current->leftSon!= nullptr){
@@ -343,8 +348,13 @@ class AVLtree {
                     } else {
                         current->father->rightSon=current->rightSon;
                         current->rightSon->father=current->father;
-                        updateHeights(current->rightSon);
-                        roll(current->rightSon);
+                        if (current->rightSon== nullptr){
+                            updateHeights(current->father);
+                            roll(current->father);
+                        } else {
+                            updateHeights(current->rightSon);
+                            roll(current->rightSon);
+                        }
                     }
                 }
                 delete(current);
