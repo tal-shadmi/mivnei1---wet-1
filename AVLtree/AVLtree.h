@@ -142,6 +142,8 @@ class AVLtree {
         else BRightSonHeight=B->rightSon->height;
         B->leftSon=problemNode;
         B->father=problemNode->father;
+        if (problemNode->father!= nullptr)
+            problemNode->father->leftSon=B;
         problemNode->father=B;
         if (B->father== nullptr)
             root=B;
@@ -172,6 +174,8 @@ class AVLtree {
         else ARightSonHeight=A->rightSon->height;
         A->rightSon=problemNode;
         A->father= problemNode->father;
+        if (problemNode->father!= nullptr)
+            problemNode->father->rightSon=A;
         problemNode->father=A;
         if (A->father== nullptr)
             root=A;
