@@ -9,7 +9,9 @@ int main() {
     testAVLTree.insert(c);
     testAVLTree.insert(d);
     testAVLTree.insert(e);
+    /*
     testAVLTree.insert(f);
     testAVLTree.insert(g);
+    */
     return 0;
 }
