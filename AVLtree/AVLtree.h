@@ -316,42 +316,56 @@ class AVLtree {
             throw BadParameters();
         }
         AVLNode* current = root;
+        AVLNode* connectionNode;
         while (current!= nullptr){
             if (current->key==key){
-                if (current->father->key>current->key){
-                    if (current->rightSon!= nullptr){
-                        current->father->leftSon=current->rightSon;
-                        current->rightSon->father=current->father;
-                        current->rightSon->leftSon=current->leftSon;
-                        current->leftSon->father=current->rightSon;
-                        updateHeights(current->rightSon);
-                        roll(current->rightSon);
-                    } else {
-                        current->father->leftSon=current->leftSon;
-                        current->leftSon->father=current->father;
-                        if (current->leftSon== nullptr){
-                            updateHeights(current->father);
-                            roll(current->father);
-                        } else {
-                            updateHeights(current->leftSon);
-                            roll(current->leftSon);
-                        }
-                    }
-                } else {
+                if (current->father!= nullptr){
                     if (current->leftSon!= nullptr){
-                        current->father->rightSon=current->leftSon;
+                        connectionNode=current->leftSon;
+                        while (connectionNode->rightSon!= nullptr)
+                            connectionNode=connectionNode->rightSon;
+                        if (current->father->key>current->key)
+                            current->father->leftSon=current->leftSon;
+                        else if (current->father->key<current->key)
+                            current->father->rightSon=current->leftSon;
                         current->leftSon->father=current->father;
-                        current->leftSon->rightSon=current->rightSon;
-                        current->rightSon->father=current->leftSon;
-                        updateHeights(current->leftSon);
-                        roll(current->leftSon);
+                        connectionNode->rightSon=current->rightSon;
+                        if (current->leftSon!= nullptr){
+                            current->rightSon->father=connectionNode;
+                        }
+                        updateHeights(connectionNode);
+                        roll(connectionNode);
                     } else {
-                        current->father->rightSon=current->rightSon;
+                        if (current->father->key>current->key)
+                            current->father->leftSon=current->rightSon;
+                        else if (current->father->key<current->key)
+                            current->father->rightSon=current->rightSon;
                         current->rightSon->father=current->father;
                         if (current->rightSon== nullptr){
                             updateHeights(current->father);
                             roll(current->father);
                         } else {
+                            updateHeights(current->rightSon);
+                            roll(current->rightSon);
+                        }
+                    }
+                } else {
+                    if (current->leftSon!= nullptr){
+                        connectionNode=current->leftSon;
+                        while (connectionNode->rightSon!= nullptr)
+                            connectionNode=connectionNode->rightSon;
+                        root=current->leftSon;
+                        current->leftSon->father= nullptr;
+                        connectionNode->rightSon=current->rightSon;
+                        if (current->leftSon!= nullptr){
+                            current->rightSon->father=connectionNode;
+                        }
+                        updateHeights(connectionNode);
+                        roll(connectionNode);
+                    } else {
+                        root=current->rightSon;
+                        current->rightSon->father= nullptr;
+                        if (current->rightSon!= nullptr){
                             updateHeights(current->rightSon);
                             roll(current->rightSon);
                         }
