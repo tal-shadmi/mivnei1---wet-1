@@ -152,12 +152,12 @@ class AVLtree {
             if (leftSonHeight-rightSonHeight==INVALID_HEIGHTS_BALANCE_A){
                 if (leftSonLeftSonHeight-leftSonRightSonHeight==-1)
                     current=LRroll(current)->father;
-                else if (leftSonLeftSonHeight-leftSonRightSonHeight==1)
+                else if (leftSonLeftSonHeight-leftSonRightSonHeight>=0)
                     current=LLroll(current)->father;
                 continue;
             }
             if (leftSonHeight-rightSonHeight==INVALID_HEIGHTS_BALANCE_B){
-                if (rightSonLeftSonHeight-rightSonRightSonHeight==-1)
+                if (rightSonLeftSonHeight-rightSonRightSonHeight<=0)
                     current=RRroll(current)->father;
                 else if (rightSonLeftSonHeight-rightSonRightSonHeight==1)
                     current=RLroll(current)->father;

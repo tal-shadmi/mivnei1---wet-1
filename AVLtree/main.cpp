@@ -45,5 +45,6 @@ int main() {
     testAVLTree.insert(i,zero);
     testAVLTree.erase(g);
     testAVLTree.erase(c);
+    testAVLTree.erase(b);
     return 0;
 }
