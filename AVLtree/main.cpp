@@ -33,7 +33,7 @@ class AVLArtistsTree : public AVLtree<artistKey,artistData>{
 
 int main() {
     AVLtree<int,int> testAVLTree;
-    int zero=0,a=1,b=4,c=6,d=2,e=3,f=22,g=18;
+    int zero=0,a=1,b=4,c=6,d=2,e=3,f=22,g=18,h=10,i=12;
     testAVLTree.insert(a,zero);
     testAVLTree.insert(b,zero);
     testAVLTree.insert(c,zero);
@@ -41,5 +41,9 @@ int main() {
     testAVLTree.insert(e,zero);
     testAVLTree.insert(f,zero);
     testAVLTree.insert(g,zero);
+    testAVLTree.insert(h,zero);
+    testAVLTree.insert(i,zero);
+    testAVLTree.erase(g);
+    testAVLTree.erase(c);
     return 0;
 }

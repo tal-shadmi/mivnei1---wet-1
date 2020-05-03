@@ -436,7 +436,7 @@ class AVLtree {
     }
 
     AVLResult erase(Key &key){
-        if (key==nullptr){
+        if (key==NULL){
             throw BadParameters();
         }
         AVLNode* current = root;
@@ -464,11 +464,11 @@ class AVLtree {
                             current->father->leftSon=current->rightSon;
                         else if (current->father->key<current->key)
                             current->father->rightSon=current->rightSon;
-                        current->rightSon->father=current->father;
                         if (current->rightSon== nullptr){
                             updateHeights(current->father);
                             roll(current->father);
                         } else {
+                            current->rightSon->father=current->father;
                             updateHeights(current->rightSon);
                             roll(current->rightSon);
                         }
