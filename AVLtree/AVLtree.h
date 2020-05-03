@@ -26,27 +26,66 @@ typedef enum AVLRoll_t{
     LR_ROLL=4
 }AVLRoll;
 
-template <class T>
+template <class Key, class Data>
 class AVLtree {
 
     class AVLNode{
+
         public:
 
-        T key;
+        Key key;
+        Data data;
         AVLNode* father;
         AVLNode* rightSon;
         AVLNode* leftSon;
         int height;
 
         explicit AVLNode() = delete;
-        AVLNode(T key,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
-                key(key),father(father),rightSon(rightSon),leftSon(leftSon),height(height){}
+        AVLNode(Key key,Data data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
+                key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),height(height){}
         ~AVLNode() = default;
         friend bool operator<(AVLNode &node1,AVLNode &node2){
             return  node1.key<node2.key;
         }
         friend bool operator==(AVLNode &node1,AVLNode &node2){
             return  node1.key==node2.key;
+        }
+
+        Key getKey(){
+
+        }
+        Key setKey(){
+
+        }
+        Data getData(){
+
+        }
+        Data setData(){
+
+        }
+        AVLNode* getFather(){
+
+        }
+        AVLNode* setFather(){
+
+        }
+        AVLNode* getRightSon(){
+
+        }
+        AVLNode* setRightSon(){
+
+        }
+        AVLNode* getLeftSon(){
+
+        }
+        AVLNode* setLeftSon(){
+
+        }
+        int getHeight(){
+
+        }
+        int setHeight(){
+
         }
     };
 
@@ -134,18 +173,14 @@ class AVLtree {
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* B=problemNode->rightSon;
         AVLNode* BL=problemNode->rightSon->leftSon;
-        if (B->leftSon== nullptr||B->leftSon->leftSon== nullptr) problemNodeLeftSonHeight=EMPTY_NODE_HEIGHT;
-        else problemNodeLeftSonHeight=B->leftSon->leftSon->height;
-        if (B->leftSon== nullptr||B->leftSon->rightSon== nullptr) problemNodeRightSonHeight=EMPTY_NODE_HEIGHT;
-        else problemNodeRightSonHeight=B->leftSon->rightSon->height;
-        if (B->leftSon== nullptr) BLeftSonHeight=EMPTY_NODE_HEIGHT;
-        else BLeftSonHeight=B->leftSon->height;
-        if (B->rightSon== nullptr) BRightSonHeight=EMPTY_NODE_HEIGHT;
-        else BRightSonHeight=B->rightSon->height;
+
         B->leftSon=problemNode;
         B->father=problemNode->father;
-        if (problemNode->father!= nullptr)
-            problemNode->father->leftSon=B;
+        if (problemNode->father!= nullptr){
+            if (problemNode->key>problemNode->father->key)
+                problemNode->father->rightSon=B;
+            else problemNode->father->leftSon=B;
+        }
         problemNode->father=B;
         if (B->father== nullptr)
             root=B;
@@ -153,21 +188,37 @@ class AVLtree {
         if (BL!= nullptr){
             BL->father=problemNode;
         }
+
+        if (problemNode->leftSon== nullptr) problemNodeLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonHeight=problemNode->leftSon->height;
+        if (problemNode->rightSon== nullptr) problemNodeRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonHeight=problemNode->rightSon->height;
+
+        if (problemNodeLeftSonHeight>problemNodeRightSonHeight){
+            problemNode->height=problemNodeLeftSonHeight+1;
+        } else problemNode->height=problemNodeRightSonHeight+1;
+
+        if (B->leftSon== nullptr) BLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else BLeftSonHeight=B->leftSon->height;
+        if (B->rightSon== nullptr) BRightSonHeight=EMPTY_NODE_HEIGHT;
+        else BRightSonHeight=B->rightSon->height;
+
+        if (BLeftSonHeight>BRightSonHeight){
+            B->height=BLeftSonHeight+1;
+        } else B->height=BRightSonHeight+1;
+
         if (problemNodeFather== nullptr||problemNodeFather->rightSon== nullptr) problemNodeFatherRightSonHeight=EMPTY_NODE_HEIGHT;
         else problemNodeFatherRightSonHeight=problemNodeFather->rightSon->height;
         if (problemNodeFather== nullptr||problemNodeFather->leftSon== nullptr) problemNodeFatherLeftSonHeight=EMPTY_NODE_HEIGHT;
         else problemNodeFatherLeftSonHeight=problemNodeFather->leftSon->height;
+
         if (problemNodeFather!= nullptr){
             if (problemNodeFatherLeftSonHeight>problemNodeFatherRightSonHeight){
                 problemNodeFather->height=problemNodeFatherLeftSonHeight+1;
             } else problemNodeFather->height=problemNodeFatherRightSonHeight+1;
+            updateHeights(problemNodeFather->father);
         }
-        if (problemNodeLeftSonHeight>problemNodeRightSonHeight){
-            problemNode->height=problemNodeLeftSonHeight+1;
-        } else problemNode->height=problemNodeRightSonHeight+1;
-        if (BLeftSonHeight>BRightSonHeight){
-            B->height=BLeftSonHeight+1;
-        } else B->height=BRightSonHeight+1;
+
         return B;
     };
 
@@ -177,18 +228,14 @@ class AVLtree {
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* A=problemNode->leftSon;
         AVLNode* AR=problemNode->leftSon->rightSon;
-        if (A->leftSon== nullptr||A->leftSon->leftSon== nullptr) problemNodeLeftSonHeight=EMPTY_NODE_HEIGHT;
-        else problemNodeLeftSonHeight=A->leftSon->leftSon->height;
-        if (A->leftSon== nullptr||A->leftSon->rightSon== nullptr) problemNodeRightSonHeight=EMPTY_NODE_HEIGHT;
-        else problemNodeRightSonHeight=A->leftSon->rightSon->height;
-        if (A->leftSon== nullptr) ALeftSonHeight=EMPTY_NODE_HEIGHT;
-        else ALeftSonHeight=A->leftSon->height;
-        if (A->rightSon== nullptr) ARightSonHeight=EMPTY_NODE_HEIGHT;
-        else ARightSonHeight=A->rightSon->height;
+
         A->rightSon=problemNode;
         A->father= problemNode->father;
-        if (problemNode->father!= nullptr)
-            problemNode->father->rightSon=A;
+        if (problemNode->father!= nullptr){
+            if (problemNode->key>problemNode->father->key)
+                problemNode->father->rightSon=A;
+            else problemNode->father->leftSon=A;
+        }
         problemNode->father=A;
         if (A->father== nullptr)
             root=A;
@@ -196,21 +243,37 @@ class AVLtree {
         if (AR!= nullptr){
             AR->father=problemNode;
         }
+
+        if (problemNode->leftSon== nullptr) problemNodeLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonHeight=problemNode->leftSon->height;
+        if (problemNode->rightSon== nullptr) problemNodeRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonHeight=problemNode->rightSon->height;
+
+        if (problemNodeLeftSonHeight>problemNodeRightSonHeight){
+            problemNode->height=problemNodeLeftSonHeight+1;
+        } else problemNode->height=problemNodeRightSonHeight+1;
+
+        if (A->leftSon== nullptr) ALeftSonHeight=EMPTY_NODE_HEIGHT;
+        else ALeftSonHeight=A->leftSon->height;
+        if (A->rightSon== nullptr) ARightSonHeight=EMPTY_NODE_HEIGHT;
+        else ARightSonHeight=A->rightSon->height;
+
+        if (ALeftSonHeight>ARightSonHeight){
+            A->height=ALeftSonHeight+1;
+        } else A->height=ARightSonHeight+1;
+
         if (problemNodeFather== nullptr||problemNodeFather->rightSon== nullptr) problemNodeFatherRightSonHeight=EMPTY_NODE_HEIGHT;
         else problemNodeFatherRightSonHeight=problemNodeFather->rightSon->height;
         if (problemNodeFather== nullptr||problemNodeFather->leftSon== nullptr) problemNodeFatherLeftSonHeight=EMPTY_NODE_HEIGHT;
         else problemNodeFatherLeftSonHeight=problemNodeFather->leftSon->height;
+
         if (problemNodeFather!= nullptr){
             if (problemNodeFatherLeftSonHeight>problemNodeFatherRightSonHeight){
                 problemNodeFather->height=problemNodeFatherLeftSonHeight+1;
             } else problemNodeFather->height=problemNodeFatherRightSonHeight+1;
+            updateHeights(problemNodeFather->father);
         }
-        if (problemNodeLeftSonHeight>problemNodeRightSonHeight){
-            problemNode->height=problemNodeLeftSonHeight+1;
-        } else problemNode->height=problemNodeRightSonHeight+1;
-        if (ALeftSonHeight>ARightSonHeight){
-            A->height=ALeftSonHeight+1;
-        } else A->height=ARightSonHeight+1;
+
         return A;
     };
 
@@ -225,6 +288,9 @@ class AVLtree {
     }
     */
     AVLNode* LRroll(AVLNode* problemNode){
+        RRroll(problemNode->leftSon);
+        return LLroll(problemNode);
+        /*
         AVLNode* A=problemNode->leftSon;
         AVLNode* B=problemNode->leftSon->rightSon;
         AVLNode* BR=problemNode->leftSon->rightSon->rightSon;
@@ -256,6 +322,7 @@ class AVLtree {
             B->height=B->leftSon->height;
         } else B->height=B->rightSon->height;
         return B;
+        */
     };
 
     /*
@@ -269,6 +336,9 @@ class AVLtree {
     }
     */
     AVLNode* RLroll(AVLNode* problemNode){
+        LLroll(problemNode->rightSon);
+        return RRroll(problemNode);
+        /*
         AVLNode* A=problemNode->rightSon;
         AVLNode* B=problemNode->rightSon->leftSon;
         AVLNode* BR=problemNode->leftSon->rightSon->rightSon;
@@ -300,6 +370,7 @@ class AVLtree {
             B->height=B->leftSon->height;
         } else B->height=B->rightSon->height;
         return B;
+        */
     };
 
     public:
@@ -312,7 +383,7 @@ class AVLtree {
 
     AVLtree (const AVLtree &avltree)= delete;
 
-    ~AVLtree(){
+    virtual ~AVLtree(){
         deleteTreePostorder(root);
     };
 
@@ -329,12 +400,12 @@ class AVLtree {
     };
     */
 
-    AVLNode* insert(T &key){
+    AVLNode* insert(Key &key,Data &data){
         if (key==NULL){
             throw BadParameters();
         }
         if (root== nullptr){
-            root=new AVLNode(key, nullptr, nullptr, nullptr);
+            root=new AVLNode(key, data, nullptr, nullptr, nullptr);
             return root;
         }
         AVLNode* newAvlNode= nullptr;
@@ -344,7 +415,7 @@ class AVLtree {
                 throw AlreadyExist();
             if (current->key<key) {
                 if (current->rightSon==nullptr){
-                    newAvlNode=new AVLNode(key,current, nullptr, nullptr);
+                    newAvlNode=new AVLNode(key, data, current, nullptr, nullptr);
                     current->rightSon=newAvlNode;
                     break;
                 }
@@ -352,7 +423,7 @@ class AVLtree {
             }
             else {
                 if (current->leftSon== nullptr){
-                    newAvlNode =new AVLNode(key,current, nullptr, nullptr);
+                    newAvlNode =new AVLNode(key, data, current, nullptr, nullptr);
                     current->leftSon=newAvlNode;
                     break;
                 }
@@ -364,7 +435,7 @@ class AVLtree {
         return newAvlNode;
     }
 
-    AVLResult erase(T &key){
+    AVLResult erase(Key &key){
         if (key==nullptr){
             throw BadParameters();
         }
@@ -434,7 +505,7 @@ class AVLtree {
         throw NotFound();
     }
 
-    AVLNode* find (T &key){
+    AVLNode* find (Key &key){
         if (key==nullptr){
             throw BadParameters();
         }
