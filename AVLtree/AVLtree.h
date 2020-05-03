@@ -277,100 +277,14 @@ class AVLtree {
         return A;
     };
 
-    /*
-     * in recitation 5 it says that LR roll is RR roll on problemNode->leftSon
-     * and then LL roll on problemNode - this may make the function shorter
-     * using the functions RR and LL
-     *
-    AVLResult LRroll(AVLNode* problemNode){
-        RRroll(problemNode->leftSon);
-        LLroll(problemNode);
-    }
-    */
     AVLNode* LRroll(AVLNode* problemNode){
         RRroll(problemNode->leftSon);
         return LLroll(problemNode);
-        /*
-        AVLNode* A=problemNode->leftSon;
-        AVLNode* B=problemNode->leftSon->rightSon;
-        AVLNode* BR=problemNode->leftSon->rightSon->rightSon;
-        AVLNode* BL=problemNode->leftSon->rightSon->leftSon;
-        B->rightSon=problemNode;
-        B->leftSon=A;
-        B->father= problemNode->father;
-        if (B->father== nullptr){
-            root=B;
-        }
-        A->father=B;
-        B->leftSon=A;
-        problemNode->father=B;
-        A->rightSon=BL;
-        if (BL!= nullptr){
-            BL->father=A;
-        }
-        problemNode->leftSon=BR;
-        if (BR!= nullptr){
-            BR->father=problemNode;
-        }
-        if (problemNode->leftSon->height>problemNode->rightSon->height){
-            problemNode->height=problemNode->leftSon->height;
-        } else problemNode->height=problemNode->rightSon->height;
-        if (A->leftSon->height>A->rightSon->height){
-            A->height=A->leftSon->height;
-        } else A->height=A->rightSon->height;
-        if (B->leftSon->height>B->rightSon->height){
-            B->height=B->leftSon->height;
-        } else B->height=B->rightSon->height;
-        return B;
-        */
     };
 
-    /*
-     * in recitation 5 it says that RL roll is LL roll on problemNode->rightSon
-     * and then RR roll on problemNode - this may make the function shorter
-     * using the functions LL and RR
-     *
-    AVLResult RLroll(AVLNode* problemNode){
-        LLroll(problemNode->rightSon);
-        RRroll(problemNode);
-    }
-    */
     AVLNode* RLroll(AVLNode* problemNode){
         LLroll(problemNode->rightSon);
         return RRroll(problemNode);
-        /*
-        AVLNode* A=problemNode->rightSon;
-        AVLNode* B=problemNode->rightSon->leftSon;
-        AVLNode* BR=problemNode->leftSon->rightSon->rightSon;
-        AVLNode* BL=problemNode->leftSon->rightSon->leftSon;
-        B->rightSon=problemNode;
-        B->rightSon=A;
-        B->father= problemNode->father;
-        if (B->father== nullptr){
-            root=B;
-        }
-        A->father=B;
-        B->rightSon=A;
-        problemNode->father=B;
-        A->leftSon=BR;
-        if (BR!= nullptr){
-            BR->father=A;
-        }
-        problemNode->rightSon=BL;
-        if (BL!= nullptr){
-            BL->father=problemNode;
-        }
-        if (problemNode->leftSon->height>problemNode->rightSon->height){
-            problemNode->height=problemNode->leftSon->height;
-        } else problemNode->height=problemNode->rightSon->height;
-        if (A->leftSon->height>A->rightSon->height){
-            A->height=A->leftSon->height;
-        } else A->height=A->rightSon->height;
-        if (B->leftSon->height>B->rightSon->height){
-            B->height=B->leftSon->height;
-        } else B->height=B->rightSon->height;
-        return B;
-        */
     };
 
     public:

@@ -46,5 +46,6 @@ int main() {
     testAVLTree.erase(g);
     testAVLTree.erase(c);
     testAVLTree.erase(b);
+    testAVLTree.find(d);
     return 0;
 }
