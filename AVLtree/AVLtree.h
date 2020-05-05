@@ -13,21 +13,10 @@
 
 using std::exception;
 
-typedef enum AVLResult_t {
-    SUCCESS=1,
-    FAILURE=0
-}AVLResult;
-
-typedef enum AVLRoll_t{
-    NO_ROLL=0,
-    RR_ROLL=1,
-    LL_ROLL=2,
-    RL_ROLL=3,
-    LR_ROLL=4
-}AVLRoll;
-
 template <class Key, class Data>
 class AVLtree {
+
+    protected:
 
     class AVLNode{
 
@@ -49,43 +38,6 @@ class AVLtree {
         }
         friend bool operator==(AVLNode &node1,AVLNode &node2){
             return  node1.key==node2.key;
-        }
-
-        Key getKey(){
-
-        }
-        Key setKey(){
-
-        }
-        Data getData(){
-
-        }
-        Data setData(){
-
-        }
-        AVLNode* getFather(){
-
-        }
-        AVLNode* setFather(){
-
-        }
-        AVLNode* getRightSon(){
-
-        }
-        AVLNode* setRightSon(){
-
-        }
-        AVLNode* getLeftSon(){
-
-        }
-        AVLNode* setLeftSon(){
-
-        }
-        int getHeight(){
-
-        }
-        int setHeight(){
-
         }
     };
 
@@ -314,13 +266,13 @@ class AVLtree {
     };
     */
 
-    AVLNode* insert(Key &key,Data &data){
+    void insert(Key &key,Data &data){
         if (key==NULL){
             throw BadParameters();
         }
         if (root== nullptr){
             root=new AVLNode(key, data, nullptr, nullptr, nullptr);
-            return root;
+            return;
         }
         AVLNode* newAvlNode= nullptr;
         AVLNode* current = root;
@@ -346,10 +298,9 @@ class AVLtree {
         }
         updateHeights(current);
         roll(current);
-        return newAvlNode;
     }
 
-    AVLResult erase(Key &key){
+    void erase(Key &key){
         if (key==NULL){
             throw BadParameters();
         }
@@ -410,7 +361,7 @@ class AVLtree {
                     }
                 }
                 delete(current);
-                return SUCCESS;
+                return;
             }
             if (current->key<key)
                 current=current->rightSon;
@@ -419,14 +370,14 @@ class AVLtree {
         throw NotFound();
     }
 
-    AVLNode* find (Key &key){
-        if (key==nullptr){
+    Data find (Key &key){
+        if (key==NULL){
             throw BadParameters();
         }
         AVLNode* current = root;
         while (current!= nullptr){
             if (current->key==key)
-                return current;
+                return current->data;
             if (current->key<key)
                 current=current->rightSon;
             else current=current->leftSon;

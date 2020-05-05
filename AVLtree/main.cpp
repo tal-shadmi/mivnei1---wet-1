@@ -1,36 +1,6 @@
 #include <iostream>
 #include "AVLtree.h"
 
-struct songKey{
-    int songID;
-    int songNumberOfPlays;
-};
-
-struct artistKey{
-    int artistID;
-};
-
-struct artistData{
-    // arrays, AVLtree of songs ...
-};
-
-class AVLSongsTree : public AVLtree<songKey,int>{
-
-    public:
-
-    explicit AVLSongsTree()= default;
-
-};
-
-class AVLArtistsTree : public AVLtree<artistKey,artistData>{
-
-    public:
-
-    explicit AVLArtistsTree()= default;
-
-};
-
-
 int main() {
     AVLtree<int,int> testAVLTree;
     int zero=0,a=1,b=4,c=6,d=2,e=3,f=22,g=18,h=10,i=12;
@@ -46,6 +16,23 @@ int main() {
     testAVLTree.erase(g);
     testAVLTree.erase(c);
     testAVLTree.erase(b);
-    testAVLTree.find(d);
+    try {
+        testAVLTree.find(g);
+    }
+    catch (AVLtree<int,int>::NotFound& e){
+        printf("18 is not a value in the tree");
+    }
+    catch (AVLtree<int,int>::BadParameters& e){
+        printf("bad parameters!");
+    }
+    try {
+        (testAVLTree.find(e));
+    }
+    catch (AVLtree<int,int>::NotFound& e){
+        printf("3 is a value in the tree");
+    }
+    catch (AVLtree<int,int>::BadParameters& e){
+        printf("bad parameters!");
+    }
     return 0;
 }
