@@ -16,6 +16,14 @@ typedef enum {
 
 class MusicManager{
 
+    // ---------- Subclasses ---------- //
+
+    class SongKey;
+    class ArtistKey;
+    class ArtistData;
+    class ArtistReducedData;
+    class PlaysNode;
+
     class SongKey{
         int songID;
         int songNumberOfPlays;
@@ -27,6 +35,11 @@ class MusicManager{
         ~SongKey()= default;
         int getSongID();
         int getSongNumberOfPlays();
+        friend bool operator<(SongKey &songKey1,SongKey &songKey2){
+            if (songKey1.songNumberOfPlays<songKey2.songNumberOfPlays) return true;
+            if (songKey1.songNumberOfPlays>songKey2.songNumberOfPlays) return false;
+            else return songKey1.songID>songKey2.songID;
+        };
     };
 
     class ArtistKey{
@@ -35,76 +48,66 @@ class MusicManager{
         public:
 
         ArtistKey()= delete;
-        ArtistKey(int artistID);
+        explicit ArtistKey(int artistID);
         ~ArtistKey()= default;
         int getArtistID();
+        friend bool operator<(ArtistKey &artistKey1,ArtistKey &artistKey2){
+            return artistKey1.artistID<artistKey2.artistID;
+        };
+    };
+
+    class ArtistData{
+        int numberOfSongs;
+        AVLtree<SongKey,int> songs;
+        AVLtree<SongKey,int>::AVLNode** songNodes;
+        PlaysNode** playsNodes;
+        int** zeroPlays;
+
+    public:
+
+        ArtistData()= delete;
+        explicit ArtistData(int numberOfSongs);
+        ~ArtistData();
     };
 
     class ArtistReducedData{
-        // AVLNode* artistNode; // this is problematic at the moment because we
-                                // don't have access to create AVLNode pointers
-        public:
+         AVLtree<ArtistKey,ArtistData>::AVLNode* artistNode;
+    public:
 
         ArtistReducedData()= delete;
-        // ArtistReducedData(AVLNode* artistNode);
+        explicit ArtistReducedData(AVLtree<ArtistKey,ArtistData>::AVLNode* artistNode);
         ~ArtistReducedData()= default;
-        // AVLNode* getArtistNode();
-    };
-
-    class AVLReducedArtistsTree : public AVLtree<ArtistKey,ArtistReducedData>{
-
-        public:
-
-        explicit AVLReducedArtistsTree()= default;
-        explicit AVLReducedArtistsTree(AVLNode* root);
-        ~AVLReducedArtistsTree() override = default;
+        const AVLtree<ArtistKey,ArtistData>::AVLNode& getArtistNode();
     };
 
     class PlaysNode{
         int numberOfPlays;
-        AVLReducedArtistsTree artistsTree;
+        AVLtree<ArtistKey,ArtistReducedData> artistsTree;
         PlaysNode* next;
         PlaysNode* previous;
 
-        public:
+    public:
 
         PlaysNode()= delete;
-        PlaysNode(int numberOfPlays,AVLReducedArtistsTree artistTree,PlaysNode* next,
+        PlaysNode(int numberOfPlays,AVLtree<ArtistKey,ArtistReducedData> artistTree,PlaysNode* next,
                   PlaysNode* previous);
         ~PlaysNode()= default;
     };
 
-    class ArtistData{
-        // AVLNode* songNode; // this is problematic at the moment because we
-                              // don't have access to create AVLNode pointers
-        PlaysNode* playsNode;
-        int* zeroPlays;
+    // ---------- Properties ---------- //
 
-        public:
+    AVLtree<ArtistKey,ArtistData> artists;
+    // List<PlaysNode> songPlays;
 
-        ArtistData()= delete;
-        ArtistData(PlaysNode* playsNode, int numberOfSongs); // we will need to use "new"
-                                                             // in the size of numberOfSongs
-        ~ArtistData(); // we need to write this function ourselves and delete the array
-    };
+    // ---------- Functions ---------- //
 
-    class AVLArtistsTree : public AVLtree<ArtistKey,ArtistData>{
-
-        public:
-
-        explicit AVLArtistsTree()= default;
-        explicit AVLArtistsTree(AVLNode* root);
-        ~AVLArtistsTree() override = default;
-    };
-
-    class AVLSongsTree : public AVLtree<SongKey,int>{
-
-        public:
-
-        explicit AVLSongsTree()= default;
-        explicit AVLSongsTree(AVLNode* root);
-        ~AVLSongsTree() override = default;
-    };
+    MusicManager();
+    ~MusicManager();
+    void addArtist(int artistID,int numOfSongs);
+    void removeArtist(int artistID);
+    void addToSongCount(int artistID,int songID);
+    int numberOfStreams(int artistID,int songID);
+    void getRecommendedSongs(int numOfSongs,int *artists,int *songs);
 
 };
 

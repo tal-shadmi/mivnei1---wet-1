@@ -14,13 +14,11 @@
 using std::exception;
 
 template <class Key, class Data>
-class AVLtree {
+class AVLtree{
 
-    protected:
+    public:
 
     class AVLNode{
-
-        public:
 
         Key key;
         Data data;
@@ -28,6 +26,8 @@ class AVLtree {
         AVLNode* rightSon;
         AVLNode* leftSon;
         int height;
+
+        public:
 
         explicit AVLNode() = delete;
         AVLNode(Key key,Data data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
@@ -39,7 +39,11 @@ class AVLtree {
         friend bool operator==(AVLNode &node1,AVLNode &node2){
             return  node1.key==node2.key;
         }
+
+        friend class AVLtree;
     };
+
+    protected:
 
     AVLNode* root;
 
@@ -389,6 +393,5 @@ class AVLtree {
     class BadParameters : public  exception{};
     class AlreadyExist : public exception{};
 };
-
 
 #endif //AVLTREE_AVLTREE_H

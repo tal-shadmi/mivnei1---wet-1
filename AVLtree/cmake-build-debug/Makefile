@@ -122,59 +122,32 @@ AVLtree/fast:
 	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/build
 .PHONY : AVLtree/fast
 
-AVLtree.obj: AVLtree.cpp.obj
+AVLTreeTest.obj: AVLTreeTest.cpp.obj
 
-.PHONY : AVLtree.obj
-
-# target to build an object file
-AVLtree.cpp.obj:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLtree.cpp.obj
-.PHONY : AVLtree.cpp.obj
-
-AVLtree.i: AVLtree.cpp.i
-
-.PHONY : AVLtree.i
-
-# target to preprocess a source file
-AVLtree.cpp.i:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLtree.cpp.i
-.PHONY : AVLtree.cpp.i
-
-AVLtree.s: AVLtree.cpp.s
-
-.PHONY : AVLtree.s
-
-# target to generate assembly for a file
-AVLtree.cpp.s:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLtree.cpp.s
-.PHONY : AVLtree.cpp.s
-
-main.obj: main.cpp.obj
-
-.PHONY : main.obj
+.PHONY : AVLTreeTest.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+AVLTreeTest.cpp.obj:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj
+.PHONY : AVLTreeTest.cpp.obj
 
-main.i: main.cpp.i
+AVLTreeTest.i: AVLTreeTest.cpp.i
 
-.PHONY : main.i
+.PHONY : AVLTreeTest.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main.cpp.i
-.PHONY : main.cpp.i
+AVLTreeTest.cpp.i:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.i
+.PHONY : AVLTreeTest.cpp.i
 
-main.s: main.cpp.s
+AVLTreeTest.s: AVLTreeTest.cpp.s
 
-.PHONY : main.s
+.PHONY : AVLTreeTest.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main.cpp.s
-.PHONY : main.cpp.s
+AVLTreeTest.cpp.s:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.s
+.PHONY : AVLTreeTest.cpp.s
 
 # Help Target
 help:
@@ -185,12 +158,9 @@ help:
 	@echo ... AVLtree
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... AVLtree.obj
-	@echo ... AVLtree.i
-	@echo ... AVLtree.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... AVLTreeTest.obj
+	@echo ... AVLTreeTest.i
+	@echo ... AVLTreeTest.s
 .PHONY : help
 
 
