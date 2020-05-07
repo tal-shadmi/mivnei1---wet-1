@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj"
+  "CMakeFiles/AVLtree.dir/main.cpp.o"
+  "CMakeFiles/AVLtree.dir/AVLtree.cpp.o"
+  "CMakeFiles/AVLtree.dir/List.cpp.o"
   "AVLtree.pdb"
-  "AVLtree.exe"
-  "AVLtree.exe.manifest"
-  "libAVLtree.dll.a"
+  "AVLtree"
 )
 
 # Per-language clean rules from dependency scanning.
