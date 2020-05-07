@@ -1,10 +1,10 @@
 //
 // Created by Dell on 30/04/2020.
 //
-#define LEAF_HEIGHT 1
+#define LEAF_HEIGHT 0
 #define INVALID_HEIGHTS_BALANCE_A 2
 #define INVALID_HEIGHTS_BALANCE_B -2
-#define EMPTY_NODE_HEIGHT 0
+#define EMPTY_NODE_HEIGHT -1
 
 #ifndef AVLTREE_AVLTREE_H
 #define AVLTREE_AVLTREE_H
@@ -52,6 +52,51 @@ class AVLtree{
         deleteTreePostorder(root->leftSon);
         deleteTreePostorder(root->rightSon);
         delete(root);
+    }
+
+    void printTreeInorder (AVLNode* root){
+        int leftSonHeight,rightSonHeight;
+        if (root== nullptr) return;
+        printTreeInorder(root->leftSon);
+        if (root->leftSon== nullptr) leftSonHeight=EMPTY_NODE_HEIGHT;
+        else leftSonHeight=root->leftSon->height;
+        if (root->rightSon== nullptr) rightSonHeight=EMPTY_NODE_HEIGHT;
+        else rightSonHeight=root->rightSon->height;
+        printf("%d BF: %d Height: %d \n",root->key,
+                leftSonHeight-rightSonHeight,root->height);
+        if (leftSonHeight-rightSonHeight>=2||leftSonHeight-rightSonHeight<=-2)
+            printf("ERROR!!!!!!!!!!!!!!!!!!!!!! \n");
+        printTreeInorder(root->rightSon);
+    }
+
+    void printTreePostorder (AVLNode* root){
+        int leftSonHeight,rightSonHeight;
+        if (root== nullptr) return;
+        printTreeInorder(root->leftSon);
+        printTreeInorder(root->rightSon);
+        if (root->leftSon== nullptr) leftSonHeight=EMPTY_NODE_HEIGHT;
+        else leftSonHeight=root->leftSon->height;
+        if (root->rightSon== nullptr) rightSonHeight=EMPTY_NODE_HEIGHT;
+        else rightSonHeight=root->rightSon->height;
+        printf("%d BF: %d Height: %d \n",root->key,
+               leftSonHeight-rightSonHeight,root->height);
+        if (leftSonHeight-rightSonHeight>=2||leftSonHeight-rightSonHeight<=-2)
+            printf("ERROR!!!!!!!!!!!!!!!!!!!!!! \n");
+    }
+
+    void printTreeInfoInorder(AVLNode* root){
+        int leftSonKey,rightSonKey,fatherKey;
+        if (root== nullptr) return;
+        theTree(root->leftSon);
+        if (root->father== nullptr) fatherKey=-1;
+        else fatherKey=root->father->key;
+        if (root->leftSon== nullptr) leftSonKey=-1;
+        else leftSonKey=root->leftSon->key;
+        if (root->rightSon== nullptr) rightSonKey=-1;
+        else rightSonKey=root->rightSon->key;
+        printf("root key: %d,left son key: %d,right son key: %d,father key: %d \n",
+                root->key,leftSonKey,rightSonKey,fatherKey);
+        theTree(root->rightSon);
     }
 
     void updateHeights(AVLNode* startNode){
@@ -105,14 +150,14 @@ class AVLtree{
             else rightSonLeftSonHeight=current->rightSon->leftSon->height;
             if (current->rightSon== nullptr||current->rightSon->rightSon== nullptr) rightSonRightSonHeight=EMPTY_NODE_HEIGHT;
             else rightSonRightSonHeight=current->rightSon->rightSon->height;
-            if (leftSonHeight-rightSonHeight==INVALID_HEIGHTS_BALANCE_A){
+            if (leftSonHeight-rightSonHeight>=INVALID_HEIGHTS_BALANCE_A){
                 if (leftSonLeftSonHeight-leftSonRightSonHeight==-1)
                     current=LRroll(current)->father;
                 else if (leftSonLeftSonHeight-leftSonRightSonHeight>=0)
                     current=LLroll(current)->father;
                 continue;
             }
-            if (leftSonHeight-rightSonHeight==INVALID_HEIGHTS_BALANCE_B){
+            if (leftSonHeight-rightSonHeight<=INVALID_HEIGHTS_BALANCE_B){
                 if (rightSonLeftSonHeight-rightSonRightSonHeight<=0)
                     current=RRroll(current)->father;
                 else if (rightSonLeftSonHeight-rightSonRightSonHeight==1)
@@ -124,8 +169,13 @@ class AVLtree{
     }
 
     AVLNode* RRroll(AVLNode* problemNode){
+
+        //printf("RR on %d \n",problemNode->key);
+
         int problemNodeLeftSonHeight,problemNodeRightSonHeight,BRightSonHeight,BLeftSonHeight,
-            problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight;
+            problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
+            problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
+            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;;
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* B=problemNode->rightSon;
         AVLNode* BL=problemNode->rightSon->leftSon;
@@ -175,12 +225,46 @@ class AVLtree{
             updateHeights(problemNodeFather->father);
         }
 
+        if (problemNode->leftSon== nullptr||problemNode->leftSon->leftSon== nullptr)
+            problemNodeLeftSonLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonLeftSonHeight=problemNode->leftSon->leftSon->height;
+        if (problemNode->leftSon== nullptr||problemNode->leftSon->rightSon== nullptr)
+            problemNodeLeftSonRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonRightSonHeight=problemNode->leftSon->rightSon->height;
+        if (problemNode->rightSon== nullptr||problemNode->rightSon->leftSon== nullptr)
+            problemNodeRightSonLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonLeftSonHeight=problemNode->rightSon->leftSon->height;
+        if (problemNode->rightSon== nullptr||problemNode->rightSon->rightSon== nullptr)
+            problemNodeRightSonRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonRightSonHeight=problemNode->rightSon->rightSon->height;
+
+        //printf("%d new BF: %d \n",problemNode->key,problemNodeLeftSonHeight-problemNodeRightSonHeight);
+
+        if (problemNodeLeftSonHeight-problemNodeRightSonHeight>=INVALID_HEIGHTS_BALANCE_A){
+            if (problemNodeLeftSonLeftSonHeight-problemNodeLeftSonRightSonHeight==-1)
+                LRroll(problemNode);
+            else if (problemNodeLeftSonLeftSonHeight-problemNodeLeftSonRightSonHeight>=0)
+                LLroll(problemNode);
+        }
+        if (problemNodeLeftSonHeight-problemNodeRightSonHeight<=INVALID_HEIGHTS_BALANCE_B){
+            if (problemNodeRightSonLeftSonHeight-problemNodeRightSonRightSonHeight<=0)
+                RRroll(problemNode);
+            else if (problemNodeRightSonLeftSonHeight-problemNodeRightSonRightSonHeight==1)
+                RLroll(problemNode);
+        }
+
         return B;
+
     };
 
     AVLNode* LLroll(AVLNode* problemNode){
+
+        //printf("LL on %d \n",problemNode->key);
+
         int problemNodeLeftSonHeight,problemNodeRightSonHeight,ARightSonHeight,ALeftSonHeight,
-                problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight;
+            problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
+            problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
+            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* A=problemNode->leftSon;
         AVLNode* AR=problemNode->leftSon->rightSon;
@@ -230,7 +314,36 @@ class AVLtree{
             updateHeights(problemNodeFather->father);
         }
 
+        if (problemNode->leftSon== nullptr||problemNode->leftSon->leftSon== nullptr)
+            problemNodeLeftSonLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonLeftSonHeight=problemNode->leftSon->leftSon->height;
+        if (problemNode->leftSon== nullptr||problemNode->leftSon->rightSon== nullptr)
+            problemNodeLeftSonRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeLeftSonRightSonHeight=problemNode->leftSon->rightSon->height;
+        if (problemNode->rightSon== nullptr||problemNode->rightSon->leftSon== nullptr)
+            problemNodeRightSonLeftSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonLeftSonHeight=problemNode->rightSon->leftSon->height;
+        if (problemNode->rightSon== nullptr||problemNode->rightSon->rightSon== nullptr)
+            problemNodeRightSonRightSonHeight=EMPTY_NODE_HEIGHT;
+        else problemNodeRightSonRightSonHeight=problemNode->rightSon->rightSon->height;
+
+        //printf("%d new BF: %d \n",problemNode->key,problemNodeLeftSonHeight-problemNodeRightSonHeight);
+
+        if (problemNodeLeftSonHeight-problemNodeRightSonHeight>=INVALID_HEIGHTS_BALANCE_A){
+            if (problemNodeLeftSonLeftSonHeight-problemNodeLeftSonRightSonHeight==-1)
+                LRroll(problemNode);
+            else if (problemNodeLeftSonLeftSonHeight-problemNodeLeftSonRightSonHeight>=0)
+                LLroll(problemNode);
+        }
+        if (problemNodeLeftSonHeight-problemNodeRightSonHeight<=INVALID_HEIGHTS_BALANCE_B){
+            if (problemNodeRightSonLeftSonHeight-problemNodeRightSonRightSonHeight<=0)
+                RRroll(problemNode);
+            else if (problemNodeRightSonLeftSonHeight-problemNodeRightSonRightSonHeight==1)
+                RLroll(problemNode);
+        }
+
         return A;
+
     };
 
     AVLNode* LRroll(AVLNode* problemNode){
@@ -312,7 +425,9 @@ class AVLtree{
         AVLNode* connectionNode;
         while (current!= nullptr){
             if (current->key==key){
+                // if the erased node has a father
                 if (current->father!= nullptr){
+                    // if the erased node has a left son
                     if (current->leftSon!= nullptr){
                         connectionNode=current->leftSon;
                         while (connectionNode->rightSon!= nullptr)
@@ -323,16 +438,24 @@ class AVLtree{
                             current->father->rightSon=current->leftSon;
                         current->leftSon->father=current->father;
                         connectionNode->rightSon=current->rightSon;
-                        if (current->leftSon!= nullptr){
+                        if (current->rightSon!= nullptr){
                             current->rightSon->father=connectionNode;
                         }
                         updateHeights(connectionNode);
                         roll(connectionNode);
-                    } else {
+                    }
+                    //if the erased node has no left son
+                    else {
+                        //connecting the erase node father to the erased node right son
                         if (current->father->key>current->key)
                             current->father->leftSon=current->rightSon;
                         else if (current->father->key<current->key)
                             current->father->rightSon=current->rightSon;
+                        //if the erased node right son is null then update the
+                        //heights and roll from the erased node father else from
+                        //the erased node right son (and make the erased node father
+                        //the erased node right son father
+                        /*
                         if (current->rightSon== nullptr){
                             updateHeights(current->father);
                             roll(current->father);
@@ -341,8 +464,17 @@ class AVLtree{
                             updateHeights(current->rightSon);
                             roll(current->rightSon);
                         }
+                        */
+                        if (current->rightSon!= nullptr)
+                            current->rightSon->father=current->father;
+                        updateHeights(current->father);
+                        roll(current->father);
+
                     }
-                } else {
+                }
+                // if the erased node has no father
+                else {
+                    // if the erased node has a left son
                     if (current->leftSon!= nullptr){
                         connectionNode=current->leftSon;
                         while (connectionNode->rightSon!= nullptr)
@@ -350,17 +482,21 @@ class AVLtree{
                         root=current->leftSon;
                         current->leftSon->father= nullptr;
                         connectionNode->rightSon=current->rightSon;
-                        if (current->leftSon!= nullptr){
+                        if (current->rightSon!= nullptr){
                             current->rightSon->father=connectionNode;
                         }
                         updateHeights(connectionNode);
                         roll(connectionNode);
-                    } else {
+                    }
+                    // if the erased node has no left son
+                    else {
                         root=current->rightSon;
-                        current->rightSon->father= nullptr;
                         if (current->rightSon!= nullptr){
+                            current->rightSon->father= nullptr;
+                            /*
                             updateHeights(current->rightSon);
                             roll(current->rightSon);
+                            */
                         }
                     }
                 }
@@ -387,6 +523,16 @@ class AVLtree{
             else current=current->leftSon;
         }
         throw NotFound();
+    }
+
+    void printTree (){
+        printTreeInfoInorder(root);
+        printf("\n");
+    }
+
+    void treeClear (){
+        deleteTreePostorder(root);
+        root= nullptr;
     }
 
     class NotFound : public exception{};
