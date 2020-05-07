@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj"
+  "CMakeFiles/AVLtree.dir/MusicManager.cpp.obj"
   "AVLtree.pdb"
   "AVLtree.exe"
   "AVLtree.exe.manifest"

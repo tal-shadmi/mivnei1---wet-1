@@ -3,6 +3,7 @@
 //
 
 #include "MusicManager.h"
+#include "AVLtree.h"
 
 // ---------- SongKey implementation ---------- //
 
@@ -53,23 +54,12 @@ MusicManager::ArtistData::~ArtistData() {
     delete[] zeroPlays;
 }
 
-// ---------- ArtistReducedData implementation ---------- //
-
-MusicManager::ArtistReducedData::ArtistReducedData(
-        AVLtree<MusicManager::ArtistKey, MusicManager::ArtistData>::AVLNode *artistNode):
-        artistNode(artistNode) {}
-
-const AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode&
-MusicManager::ArtistReducedData::getArtistNode() {
-    return *artistNode;
-}
-
 // ---------- PlaysNode implementation ---------- //
 
 MusicManager::PlaysData::PlaysData(AVLtree<MusicManager::ArtistKey, MusicManager::ArtistReducedData> artistTree,
                                    MusicManager::PlaysData *next,
                                    MusicManager::PlaysData *previous) {
-    artistsTree = AVLtree<ArtistKey,ArtistReducedData>();
+    artistsTree = AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>();
     next = nullptr;
     previous = nullptr;
 }

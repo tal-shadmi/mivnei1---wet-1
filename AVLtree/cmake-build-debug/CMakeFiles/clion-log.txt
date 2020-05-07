@@ -1,7 +1,4 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /mnt/c/Users/kfir2/CLionProjects/mivnei1---wet-1/AVLtree
-CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
-  CMake 3.13 or higher is required.  You are running version 3.10.2
-
-
--- Configuring incomplete, errors occurred!
-See also "/mnt/c/Users/kfir2/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/TDM-GCC-32/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/TDM-GCC-32/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/TDM-GCC-32/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug

@@ -122,32 +122,32 @@ AVLtree/fast:
 	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/build
 .PHONY : AVLtree/fast
 
-AVLTreeTest.obj: AVLTreeTest.cpp.obj
+MusicManager.obj: MusicManager.cpp.obj
 
-.PHONY : AVLTreeTest.obj
+.PHONY : MusicManager.obj
 
 # target to build an object file
-AVLTreeTest.cpp.obj:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj
-.PHONY : AVLTreeTest.cpp.obj
+MusicManager.cpp.obj:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/MusicManager.cpp.obj
+.PHONY : MusicManager.cpp.obj
 
-AVLTreeTest.i: AVLTreeTest.cpp.i
+MusicManager.i: MusicManager.cpp.i
 
-.PHONY : AVLTreeTest.i
+.PHONY : MusicManager.i
 
 # target to preprocess a source file
-AVLTreeTest.cpp.i:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.i
-.PHONY : AVLTreeTest.cpp.i
+MusicManager.cpp.i:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/MusicManager.cpp.i
+.PHONY : MusicManager.cpp.i
 
-AVLTreeTest.s: AVLTreeTest.cpp.s
+MusicManager.s: MusicManager.cpp.s
 
-.PHONY : AVLTreeTest.s
+.PHONY : MusicManager.s
 
 # target to generate assembly for a file
-AVLTreeTest.cpp.s:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.s
-.PHONY : AVLTreeTest.cpp.s
+MusicManager.cpp.s:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/MusicManager.cpp.s
+.PHONY : MusicManager.cpp.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... AVLtree
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... AVLTreeTest.obj
-	@echo ... AVLTreeTest.i
-	@echo ... AVLTreeTest.s
+	@echo ... MusicManager.obj
+	@echo ... MusicManager.i
+	@echo ... MusicManager.s
 .PHONY : help
 
 

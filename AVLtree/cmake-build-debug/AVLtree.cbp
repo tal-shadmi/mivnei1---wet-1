@@ -80,10 +80,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/AVLTreeTest.cpp">
+		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/AVLtree.h">
 			<Option target="AVLtree"/>
 		</Unit>
-		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/AVLtree.h">
+		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/List.h">
+			<Option target="AVLtree"/>
+		</Unit>
+		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/MusicManager.cpp">
+			<Option target="AVLtree"/>
+		</Unit>
+		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/MusicManager.h">
 			<Option target="AVLtree"/>
 		</Unit>
 		<Unit filename="C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/CMakeLists.txt">
