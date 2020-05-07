@@ -31,7 +31,7 @@ MusicManager::ArtistData::ArtistData(int numberOfSongs){
     this->numberOfSongs = numberOfSongs;
     songs = AVLtree<SongKey,int>();
     songNodes = new AVLtree<SongKey,int>::AVLNode*[numberOfSongs];
-    playsNodes = new PlaysNode*[numberOfSongs];
+    playsNodes = new PlaysData*[numberOfSongs];
     zeroPlays = new int*[numberOfSongs];
     for (int i = 0; i < numberOfSongs; ++i) {
         songNodes[i]= nullptr;
@@ -66,11 +66,9 @@ MusicManager::ArtistReducedData::getArtistNode() {
 
 // ---------- PlaysNode implementation ---------- //
 
-MusicManager::PlaysNode::PlaysNode(int numberOfPlays,
-                                   AVLtree<MusicManager::ArtistKey, MusicManager::ArtistReducedData> artistTree,
-                                   MusicManager::PlaysNode *next,
-                                   MusicManager::PlaysNode *previous) {
-    this->numberOfPlays=numberOfPlays;
+MusicManager::PlaysData::PlaysData(AVLtree<MusicManager::ArtistKey, MusicManager::ArtistReducedData> artistTree,
+                                   MusicManager::PlaysData *next,
+                                   MusicManager::PlaysData *previous) {
     artistsTree = AVLtree<ArtistKey,ArtistReducedData>();
     next = nullptr;
     previous = nullptr;

@@ -6,6 +6,7 @@
 #define AVLTREE_MUSICMANAGER_H
 
 #include "AVLtree.h"
+#include "List.h"
 
 typedef enum {
     SUCCESS = 0,
@@ -22,7 +23,7 @@ class MusicManager{
     class ArtistKey;
     class ArtistData;
     class ArtistReducedData;
-    class PlaysNode;
+    class PlaysData;
 
     class SongKey{
         int songID;
@@ -56,11 +57,24 @@ class MusicManager{
         };
     };
 
+    class PlaysData{
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*> artistsTree;
+        PlaysData* next;
+        PlaysData* previous;
+
+    public:
+
+        PlaysData()= delete;
+        PlaysData(AVLtree<ArtistKey,ArtistReducedData> artistTree,PlaysData* next,
+                  PlaysData* previous);
+        ~PlaysData()= default;
+    };
+
     class ArtistData{
         int numberOfSongs;
         AVLtree<SongKey,int> songs;
         AVLtree<SongKey,int>::AVLNode** songNodes;
-        PlaysNode** playsNodes;
+        PlaysData** playsNodes;
         int** zeroPlays;
 
     public:
@@ -70,6 +84,7 @@ class MusicManager{
         ~ArtistData();
     };
 
+    /*
     class ArtistReducedData{
          AVLtree<ArtistKey,ArtistData>::AVLNode* artistNode;
     public:
@@ -79,25 +94,12 @@ class MusicManager{
         ~ArtistReducedData()= default;
         const AVLtree<ArtistKey,ArtistData>::AVLNode& getArtistNode();
     };
-
-    class PlaysNode{
-        int numberOfPlays;
-        AVLtree<ArtistKey,ArtistReducedData> artistsTree;
-        PlaysNode* next;
-        PlaysNode* previous;
-
-    public:
-
-        PlaysNode()= delete;
-        PlaysNode(int numberOfPlays,AVLtree<ArtistKey,ArtistReducedData> artistTree,PlaysNode* next,
-                  PlaysNode* previous);
-        ~PlaysNode()= default;
-    };
+    */
 
     // ---------- Properties ---------- //
 
     AVLtree<ArtistKey,ArtistData> artists;
-    // List<PlaysNode> songPlays;
+    List<int,PlaysData> songPlays;
 
     // ---------- Functions ---------- //
 

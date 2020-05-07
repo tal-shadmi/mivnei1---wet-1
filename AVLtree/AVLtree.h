@@ -43,8 +43,6 @@ class AVLtree{
         friend class AVLtree;
     };
 
-    protected:
-
     AVLNode* root;
 
     void deleteTreePostorder (AVLNode* root){
@@ -115,24 +113,6 @@ class AVLtree{
         }
     }
 
-    /*
-     * recursive option from the root to the key and back of prepareRoll
-     *
-    void updateHeightsFrom(AVLNode* current,T* key){
-        if (root->key == key) return;
-        if (root->leftSon->key<key){
-            updateHeightsFrom(root->rightSon,key);
-        }
-        else {
-            updateHeightsFrom(root->leftSon,key);
-        }
-        if (root->leftSon->height>root->rightSon->height){
-            root->height=root->leftSon->height+1;
-        }
-        else root->height=root->rightSon->height+1;
-    }
-    */
-
     void roll (AVLNode* startNode){
         AVLNode* current=startNode;
         int leftSonHeight,rightSonHeight,leftSonRightSonHeight,leftSonLeftSonHeight,
@@ -175,7 +155,7 @@ class AVLtree{
         int problemNodeLeftSonHeight,problemNodeRightSonHeight,BRightSonHeight,BLeftSonHeight,
             problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
             problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
-            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;;
+            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* B=problemNode->rightSon;
         AVLNode* BL=problemNode->rightSon->leftSon;
