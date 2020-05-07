@@ -12,7 +12,7 @@ using std::endl;
 
 class NotFound : public exception{};
 class BadParameters : public exception{};
-class AlreadyExist : public exception{};
+//class AlreadyExist : public exception{};
 
 template <class Key, class Data>
 class ListNode {
