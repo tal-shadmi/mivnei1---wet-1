@@ -7,9 +7,13 @@
 
 #include <iostream>
 using std::exception;
+using std::cout;
+using std::endl;
+
 class NotFound : public exception{};
 class BadParameters : public exception{};
 class AlreadyExist : public exception{};
+
 template <class Key, class Data>
 class ListNode {
 
@@ -19,7 +23,7 @@ public:
     ListNode<Key,Data> *next;
     ListNode<Key,Data> *previous;
 
-    explicit ListNode<Key,Data>() = delete;
+    explicit ListNode<Key,Data>();  // = delete;
 
     ListNode<Key,Data>(Key key, Data data, ListNode* next, ListNode *previous):
             key (key), data(data), next(next), previous(previous){}
@@ -33,7 +37,7 @@ public:
     friend bool operator==(ListNode<Key,Data> &node1, ListNode<Key,Data> &node2) {
         return node1.key == node2.key;
     }
-    friend class ListNode;
+    //friend class ListNode;
 };
 
 /*template<class T>
@@ -49,180 +53,118 @@ class List {
     ListNode<Key, Data> *first;
     ListNode<Key, Data> *last;
 public:
-    List<Key, Data>():first(nullptr), last(nullptr){};
-    ~List(){
+    List<Key, Data>() : first(nullptr), last(nullptr) {};
+
+    ~List() {
         ListNode<Key, Data> *i = first;
         ListNode<Key, Data> *next;
-        while (i!= nullptr ){
+        while (i != nullptr) {
             next = i->next;
             delete i;
             i = next;
         }
     }
-    ListNode<Key, Data>* getFirst(){
+
+    ListNode<Key, Data> *getFirst() {
         return this->first;
     }
-    ListNode<Key, Data>* getLast(){
+
+    ListNode<Key, Data> *getLast() {
         return this->last;
     }
-    ListNode<Key, Data>* insertFirst(Key key, Data data) {
-        if(key == NULL || data == NULL){
+
+    ListNode<Key, Data> * insertFirst(Key key, Data data) {
+        if (key == NULL || data == NULL) {
             throw BadParameters();
         }
-        ListNode<Key, Data> *new_element = new ListNode<Key, Data>;
-        new_element->data = data;
-        new_element->key = key;
-        new_element->previous = NULL;
-        if (this->first==NULL) {                    // The list is empty
+        ListNode<Key, Data> *new_element = new ListNode<Key, Data>(key, data, first,
+                                                                   nullptr);
+        if (this->first == NULL) {                    // The list is empty
             first = new_element;
-            first->next = NULL;
             last = first;
         } else {
             if (last == first) {               // The list has one element
-                new_element->next = last;
-                last->previous =  new_element;
-                first = new_element;
+                last->previous = new_element;
             } else {                        // The list has more than one element
                 ListNode<Key, Data> *tmp = first;
                 first->previous = new_element;
-                first = new_element;
-                first->next = tmp;
             }
+            first = new_element;
 
         }
-        return this;
-
+        return new_element;
     }
-    ListNode<Key, Data>* insertAfterNode(Key key, Data data, ListNode<Key, Data> element) {
-        if(key == NULL || data == NULL){
+
+    ListNode<Key, Data> *insertAfterNode(Key key, Data data, ListNode<Key, Data>* element) {
+        if (key == NULL || data == NULL || element == nullptr) {
             throw BadParameters();
         }
-        if(element == first){
-            return insertFirst(key,data);
+        ListNode<Key, Data> *temp = element->next;
+        ListNode<Key, Data> *new_element = new ListNode<Key, Data>(key, data, temp,
+                                                                   element);
+        element->next = new_element;
+        if (element == last) {
+            last = new_element;
+        } else {
+            temp->previous = new_element;
         }
-        else{
-            ListNode<Key, Data> *new_element = new ListNode<Key, Data>;
-            new_element->data = data;
-            new_element->key = key;
-            if (element == last) {
-                new_element->next = NULL;
-                new_element->previous = last;
-                last->next = new_element;
-                last = new_element;
-            }
-            else{
-                new_element->next = element.next;
-                new_element->previous = element;
-                element.next->previous = new_element;
-                element.next = new_element;
-            }
-            return new_element;
-        }
-
+        return new_element;
     }
-    ListNode<Key, Data>* findByKey(Key key){
-        if (key==NULL){
+
+    ListNode<Key, Data> *findByKey(Key key) {
+        if (key == NULL) {
             throw BadParameters();
         }
         ListNode<Key, Data> *i = first;
-        while (i!= nullptr ){
-            if(i->key = key){
+        while (i != nullptr) {
+            if (i->key == key) {
                 return i;
             }
             i = i->next;
         }
         throw NotFound();
     }
-};
 
-/*
-
-    void erase(Key &key){
-        if (key==NULL){
+    void erase(ListNode<Key, Data>* element) {
+        if (element == NULL) {
             throw BadParameters();
         }
-        AVLNode* current = root;
-        AVLNode* connectionNode;
-        while (current!= nullptr){
-            if (current->key==key){
-                if (current->father!= nullptr){
-                    if (current->leftSon!= nullptr){
-                        connectionNode=current->leftSon;
-                        while (connectionNode->rightSon!= nullptr)
-                            connectionNode=connectionNode->rightSon;
-                        if (current->father->key>current->key)
-                            current->father->leftSon=current->leftSon;
-                        else if (current->father->key<current->key)
-                            current->father->rightSon=current->leftSon;
-                        current->leftSon->father=current->father;
-                        connectionNode->rightSon=current->rightSon;
-                        if (current->leftSon!= nullptr){
-                            current->rightSon->father=connectionNode;
-                        }
-                        updateHeights(connectionNode);
-                        roll(connectionNode);
-                    } else {
-                        if (current->father->key>current->key)
-                            current->father->leftSon=current->rightSon;
-                        else if (current->father->key<current->key)
-                            current->father->rightSon=current->rightSon;
-                        if (current->rightSon== nullptr){
-                            updateHeights(current->father);
-                            roll(current->father);
-                        } else {
-                            current->rightSon->father=current->father;
-                            updateHeights(current->rightSon);
-                            roll(current->rightSon);
-                        }
-                    }
-                } else {
-                    if (current->leftSon!= nullptr){
-                        connectionNode=current->leftSon;
-                        while (connectionNode->rightSon!= nullptr)
-                            connectionNode=connectionNode->rightSon;
-                        root=current->leftSon;
-                        current->leftSon->father= nullptr;
-                        connectionNode->rightSon=current->rightSon;
-                        if (current->leftSon!= nullptr){
-                            current->rightSon->father=connectionNode;
-                        }
-                        updateHeights(connectionNode);
-                        roll(connectionNode);
-                    } else {
-                        root=current->rightSon;
-                        current->rightSon->father= nullptr;
-                        if (current->rightSon!= nullptr){
-                            updateHeights(current->rightSon);
-                            roll(current->rightSon);
-                        }
-                    }
-                }
-                delete(current);
-                return;
-            }
-            if (current->key<key)
-                current=current->rightSon;
-            else current=current->leftSon;
+        if(element == first && element == last){        // The list has one element
+            first= nullptr;
+            last = nullptr;
+            delete element;
+            return;
         }
-        throw NotFound();
+        if(element == first){
+            first = element->next;
+            first->previous = nullptr;
+            delete element;
+            return;
+        }
+        if(element == last){
+            last = element->previous;
+            last->next = nullptr;
+            delete element;
+            return;
+        }
+        element->previous->next = element->next;
+        element->next->previous = element->previous;;
+        delete element;
     }
 
+    void printList(){
+        ListNode<Key, Data> *i = first;
+        if(i == nullptr){
+            cout << "List is empty" << endl;
+            return;
+        }
+        while (i != last) {
+            cout << i->key << ", ";
+            i = i->next;
+        }
+        cout << i->key << endl;
+    }
 };
- */
-
-template<typename T>
-class list1 {
-    list1();
-    list1(const list1& c);
-    list1(int num, const T& val = T());
-    list1& operator=(const list1& c);
-    void push_back(const T& val);
-    void pop_back();
-    void push_front(const T& val);
-    void pop_front();
-    int size() const;
-};
-
 
 
 #endif //AVLTREE_LIST_H
