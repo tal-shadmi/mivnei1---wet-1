@@ -12,33 +12,7 @@ using std::endl;
 
 class NotFound : public exception{};
 class BadParameters : public exception{};
-//class AlreadyExist : public exception{};
 
-template <class Key, class Data>
-class ListNode {
-
-public:
-    Key key;       //will be used for num_of_plays
-    Data data;     //will be used for artists tree
-    ListNode<Key,Data> *next;
-    ListNode<Key,Data> *previous;
-
-    explicit ListNode<Key,Data>();  // = delete;
-
-    ListNode<Key,Data>(Key key, Data data, ListNode* next, ListNode *previous):
-            key (key), data(data), next(next), previous(previous){}
-
-    ~ListNode<Key,Data>() = default;
-
-    friend bool operator<(ListNode<Key,Data> &node1, ListNode<Key,Data> &node2) {
-        return node1.key < node2.key;
-    }
-
-    friend bool operator==(ListNode<Key,Data> &node1, ListNode<Key,Data> &node2) {
-        return node1.key == node2.key;
-    }
-    //friend class ListNode;
-};
 
 /*template<class T>
 struct node {
@@ -50,14 +24,56 @@ struct node {
 
 template <class Key, class Data>
 class List {
-    ListNode<Key, Data> *first;
-    ListNode<Key, Data> *last;
-public:
-    List<Key, Data>() : first(nullptr), last(nullptr) {};
+
+    public:
+
+    class ListNode {
+
+        Key key;       //will be used for num_of_plays
+        Data data;     //will be used for artists tree
+        ListNode *next;
+        ListNode *previous;
+
+        public:
+
+        explicit ListNode()= default;  // = delete;
+
+        ListNode(Key key, Data data, ListNode* next, ListNode *previous):
+                key (key), data(data), next(next), previous(previous){}
+
+        ~ListNode() = default;
+
+        const Key& getKey() const {
+            return key;
+        }
+
+        const Data& getData() const {
+            return data;
+        }
+
+        friend bool operator<(ListNode &node1, ListNode &node2) {
+            return node1.key < node2.key;
+        }
+
+        friend bool operator==(ListNode &node1, ListNode &node2) {
+            return node1.key == node2.key;
+        }
+
+        friend class List;
+    };
+
+    private:
+
+    ListNode *first;
+    ListNode *last;
+
+    public:
+
+    List() : first(nullptr), last(nullptr) {};
 
     ~List() {
-        ListNode<Key, Data> *i = first;
-        ListNode<Key, Data> *next;
+        ListNode *i = first;
+        ListNode *next;
         while (i != nullptr) {
             next = i->next;
             delete i;
@@ -65,19 +81,21 @@ public:
         }
     }
 
-    ListNode<Key, Data> *getFirst() {
+    ListNode *getFirst() {
         return this->first;
     }
 
-    ListNode<Key, Data> *getLast() {
+    ListNode *getLast() {
         return this->last;
     }
 
-    ListNode<Key, Data> * insertFirst(Key key, Data data) {
+    ListNode * insertFirst(Key key, Data data) {
+        /*
         if (key == NULL || data == NULL) {
             throw BadParameters();
         }
-        ListNode<Key, Data> *new_element = new ListNode<Key, Data>(key, data, first,
+        */
+        ListNode *new_element = new ListNode(key, data, first,
                                                                    nullptr);
         if (this->first == NULL) {                    // The list is empty
             first = new_element;
@@ -86,7 +104,7 @@ public:
             if (last == first) {               // The list has one element
                 last->previous = new_element;
             } else {                        // The list has more than one element
-                ListNode<Key, Data> *tmp = first;
+                ListNode *tmp = first;
                 first->previous = new_element;
             }
             first = new_element;
@@ -95,13 +113,12 @@ public:
         return new_element;
     }
 
-    ListNode<Key, Data> *insertAfterNode(Key key, Data data, ListNode<Key, Data>* element) {
+    ListNode *insertAfterNode(Key key, Data data, ListNode* element) {
         if (key == NULL || data == NULL || element == nullptr) {
             throw BadParameters();
         }
-        ListNode<Key, Data> *temp = element->next;
-        ListNode<Key, Data> *new_element = new ListNode<Key, Data>(key, data, temp,
-                                                                   element);
+        ListNode *temp = element->next;
+        ListNode *new_element = new ListNode(key, data, temp, element);
         element->next = new_element;
         if (element == last) {
             last = new_element;
@@ -111,11 +128,11 @@ public:
         return new_element;
     }
 
-    ListNode<Key, Data> *findByKey(Key key) {
+    ListNode *findByKey(Key key) {
         if (key == NULL) {
             throw BadParameters();
         }
-        ListNode<Key, Data> *i = first;
+        ListNode *i = first;
         while (i != nullptr) {
             if (i->key == key) {
                 return i;
@@ -125,7 +142,7 @@ public:
         throw NotFound();
     }
 
-    void erase(ListNode<Key, Data>* element) {
+    void erase(ListNode* element) {
         if (element == NULL) {
             throw BadParameters();
         }
@@ -153,7 +170,7 @@ public:
     }
 
     void printList(){
-        ListNode<Key, Data> *i = first;
+        ListNode *i = first;
         if(i == nullptr){
             cout << "List is empty" << endl;
             return;

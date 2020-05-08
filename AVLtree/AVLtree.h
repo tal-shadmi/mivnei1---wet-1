@@ -3,8 +3,8 @@
 //
 #define LEAF_HEIGHT 0
 #define INVALID_HEIGHTS_BALANCE_A 2
-#define INVALID_HEIGHTS_BALANCE_B -2
-#define EMPTY_NODE_HEIGHT -1
+#define INVALID_HEIGHTS_BALANCE_B (-2)
+#define EMPTY_NODE_HEIGHT (-1)
 
 #ifndef AVLTREE_AVLTREE_H
 #define AVLTREE_AVLTREE_H
@@ -30,9 +30,19 @@ class AVLtree{
         public:
 
         explicit AVLNode() = delete;
+        AVLNode(AVLNode &node) = default;
         AVLNode(Key key,Data data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
                 key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),height(height){}
         ~AVLNode() = default;
+        const Key& getKey() const{
+            return key;
+        };
+        const Data& getData() const{
+            return data;
+        }
+        friend bool operator>(AVLNode &node1,AVLNode &node2){
+            return  node1.key>node2.key;
+        }
         friend bool operator<(AVLNode &node1,AVLNode &node2){
             return  node1.key<node2.key;
         }
@@ -42,6 +52,8 @@ class AVLtree{
 
         friend class AVLtree;
     };
+
+    private:
 
     AVLNode* root;
 
@@ -85,7 +97,7 @@ class AVLtree{
     void printTreeInfoInorder(AVLNode* root){
         int leftSonKey,rightSonKey,fatherKey;
         if (root== nullptr) return;
-        theTree(root->leftSon);
+        printTreeInfoInorder(root->leftSon);
         if (root->father== nullptr) fatherKey=-1;
         else fatherKey=root->father->key;
         if (root->leftSon== nullptr) leftSonKey=-1;
@@ -94,7 +106,7 @@ class AVLtree{
         else rightSonKey=root->rightSon->key;
         printf("root key: %d,left son key: %d,right son key: %d,father key: %d \n",
                 root->key,leftSonKey,rightSonKey,fatherKey);
-        theTree(root->rightSon);
+        printTreeInfoInorder(root->rightSon);
     }
 
     void updateHeights(AVLNode* startNode){
@@ -344,7 +356,7 @@ class AVLtree{
 
     explicit AVLtree(AVLNode* root):root(root){}
 
-    AVLtree (const AVLtree &avltree)= delete;
+    AVLtree (const AVLtree &avltree)= default;
 
     virtual ~AVLtree(){
         deleteTreePostorder(root);
@@ -363,13 +375,15 @@ class AVLtree{
     };
     */
 
-    void insert(Key &key,Data &data){
+    AVLNode* insert(Key &key,Data &data){
+        /*
         if (key==NULL){
             throw BadParameters();
         }
+        */
         if (root== nullptr){
             root=new AVLNode(key, data, nullptr, nullptr, nullptr);
-            return;
+            return root;
         }
         AVLNode* newAvlNode= nullptr;
         AVLNode* current = root;
@@ -395,12 +409,15 @@ class AVLtree{
         }
         updateHeights(current);
         roll(current);
+        return current;
     }
 
     void erase(Key &key){
+        /*
         if (key==NULL){
             throw BadParameters();
         }
+        */
         AVLNode* current = root;
         AVLNode* connectionNode;
         while (current!= nullptr){
@@ -435,16 +452,6 @@ class AVLtree{
                         //heights and roll from the erased node father else from
                         //the erased node right son (and make the erased node father
                         //the erased node right son father
-                        /*
-                        if (current->rightSon== nullptr){
-                            updateHeights(current->father);
-                            roll(current->father);
-                        } else {
-                            current->rightSon->father=current->father;
-                            updateHeights(current->rightSon);
-                            roll(current->rightSon);
-                        }
-                        */
                         if (current->rightSon!= nullptr)
                             current->rightSon->father=current->father;
                         updateHeights(current->father);
@@ -473,10 +480,6 @@ class AVLtree{
                         root=current->rightSon;
                         if (current->rightSon!= nullptr){
                             current->rightSon->father= nullptr;
-                            /*
-                            updateHeights(current->rightSon);
-                            roll(current->rightSon);
-                            */
                         }
                     }
                 }
@@ -490,14 +493,16 @@ class AVLtree{
         throw NotFound();
     }
 
-    Data find (Key &key){
+    AVLNode* find (Key &key){
+        /*
         if (key==NULL){
             throw BadParameters();
         }
+        */
         AVLNode* current = root;
         while (current!= nullptr){
             if (current->key==key)
-                return current->data;
+                return current;
             if (current->key<key)
                 current=current->rightSon;
             else current=current->leftSon;
@@ -506,6 +511,7 @@ class AVLtree{
     }
 
     void printTree (){
+        printTreeInorder(root);
         printTreeInfoInorder(root);
         printf("\n");
     }
