@@ -6,3 +6,6 @@ CMakeFiles/AVLtree.dir/MusicManager.cpp.obj: ../List.h
 CMakeFiles/AVLtree.dir/MusicManager.cpp.obj: ../MusicManager.cpp
 CMakeFiles/AVLtree.dir/MusicManager.cpp.obj: ../MusicManager.h
 
+CMakeFiles/AVLtree.dir/main.cpp.obj: ../AVLtree.h
+CMakeFiles/AVLtree.dir/main.cpp.obj: ../main.cpp
+

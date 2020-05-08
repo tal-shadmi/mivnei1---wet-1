@@ -375,6 +375,10 @@ class AVLtree{
     };
     */
 
+    const AVLNode* getRoot() const{
+        return root;
+    }
+
     AVLNode* insert(Key &key,Data &data){
         /*
         if (key==NULL){

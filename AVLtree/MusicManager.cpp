@@ -72,6 +72,18 @@ int** MusicManager::ArtistData::getZeroPlays() const {
     return zeroPlays;
 }
 
+int MusicManager::ArtistData::getMaxSongID(int maxSongID) {
+    return maxSongID;
+}
+
+int MusicManager::ArtistData::getMaxSongPlays(int maxSongPlays) {
+    return maxSongPlays;
+}
+
+int MusicManager::ArtistData::getCurrentMaxNotCheckedSong(int maxNotChecked) {
+    return currentMaxNotCheckedSong;
+}
+
 void MusicManager::ArtistData::setMaxSongID(int maxSongID) {
     this->maxSongID=maxSongID;
 }
@@ -104,6 +116,7 @@ void MusicManager::addArtist(int artistID, int numOfSongs) {
 }
 
 void MusicManager::addToSongCount(int artistID, int songID) {
+    List<int,PlaysData>::ListNode* save= nullptr;
     MusicManager::ArtistKey artistKey = MusicManager::ArtistKey(artistID);
     AVLtree<ArtistKey,ArtistData>::AVLNode* artist = artists.find(artistKey);
     AVLtree<SongKey,int>::AVLNode* songNode = artist->getData().getSongNodes()[songID];
@@ -124,5 +137,15 @@ void MusicManager::addToSongCount(int artistID, int songID) {
     artist->getData().getSongs().erase(oldSongKey);
     MusicManager::SongKey newSongKey = MusicManager::SongKey(songID,newNumberOfPlays);
     artist->getData().getSongs().insert(newSongKey,artistID);
+    artist->getData().getPlaysNodes()[songID]->getData().getArtistTree().erase(artistKey);
+    if (artist->getData().getPlaysNodes()[songID]->getNext()->getKey()!=artist->getData().getPlaysNodes()[songID]->getKey()+1)
+        songPlays.insertAfterNode(artist->getData().getPlaysNodes()[songID]->getKey()+1,PlaysData(),artist->getData().getPlaysNodes()[songID]);
+    artist->getData().getPlaysNodes()[songID]->getNext()->getData().getArtistTree().insert(artistKey,artist);
+    if (artist->getData().getPlaysNodes()[songID]->getData().getArtistTree().getRoot()==nullptr){
+        save = artist->getData().getPlaysNodes()[songID]->getNext();
+        songPlays.erase(artist->getData().getPlaysNodes()[songID]);
+    }
+    artist->getData().getPlaysNodes()[songID] = save;
 
+    // still need to update the maxSongID, maxSongPlays, currentMaxNotCheckedSong
 }

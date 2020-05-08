@@ -99,6 +99,9 @@ class MusicManager{
         AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
         List<int,PlaysData>::ListNode** getPlaysNodes() const ;
         int** getZeroPlays() const ;
+        int getMaxSongID(int maxSongID);
+        int getMaxSongPlays(int maxSongPlays);
+        int getCurrentMaxNotCheckedSong(int maxNotChecked);
         void setMaxSongID(int maxSongID);
         void setMaxSongPlays(int maxSongPlays);
         void setCurrentMaxNotCheckedSong(int maxNotChecked);
@@ -122,6 +125,8 @@ class MusicManager{
     List<int,PlaysData> songPlays;
 
     // ---------- Functions ---------- //
+
+    public:
 
     MusicManager();
     ~MusicManager();

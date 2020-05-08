@@ -51,6 +51,14 @@ class List {
             return data;
         }
 
+        ListNode* getNext() {
+            return next;
+        }
+
+        ListNode* getPrevious() {
+            return next;
+        }
+
         friend bool operator<(ListNode &node1, ListNode &node2) {
             return node1.key < node2.key;
         }
@@ -89,7 +97,7 @@ class List {
         return this->last;
     }
 
-    ListNode * insertFirst(Key key, Data data) {
+    ListNode *insertFirst(Key key, Data data) {
         /*
         if (key == NULL || data == NULL) {
             throw BadParameters();
@@ -114,9 +122,11 @@ class List {
     }
 
     ListNode *insertAfterNode(Key key, Data data, ListNode* element) {
+        /*
         if (key == NULL || data == NULL || element == nullptr) {
             throw BadParameters();
         }
+        */
         ListNode *temp = element->next;
         ListNode *new_element = new ListNode(key, data, temp, element);
         element->next = new_element;
@@ -129,9 +139,11 @@ class List {
     }
 
     ListNode *findByKey(Key key) {
+        /*
         if (key == NULL) {
             throw BadParameters();
         }
+        */
         ListNode *i = first;
         while (i != nullptr) {
             if (i->key == key) {
@@ -143,9 +155,11 @@ class List {
     }
 
     void erase(ListNode* element) {
+        /*
         if (element == NULL) {
             throw BadParameters();
         }
+        */
         if(element == first && element == last){        // The list has one element
             first= nullptr;
             last = nullptr;
@@ -181,6 +195,7 @@ class List {
         }
         cout << i->key << endl;
     }
+
 };
 
 
