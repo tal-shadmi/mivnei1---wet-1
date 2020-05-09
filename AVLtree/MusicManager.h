@@ -35,12 +35,12 @@ class MusicManager{
         ~SongKey()= default;
         int getSongID() const;
         int getSongNumberOfPlays() const;
-        friend bool operator>(SongKey &songKey1,SongKey &songKey2){
+        friend bool operator>(const SongKey &songKey1, const SongKey &songKey2){
             if (songKey1.songNumberOfPlays>songKey2.songNumberOfPlays) return true;
             if (songKey1.songNumberOfPlays<songKey2.songNumberOfPlays) return false;
             else return songKey1.songID<songKey2.songID;
         };
-        friend bool operator<(SongKey &songKey1,SongKey &songKey2){
+        friend bool operator<(const SongKey &songKey1, const SongKey &songKey2){
             if (songKey1.songNumberOfPlays<songKey2.songNumberOfPlays) return true;
             if (songKey1.songNumberOfPlays>songKey2.songNumberOfPlays) return false;
             else return songKey1.songID>songKey2.songID;
@@ -59,11 +59,11 @@ class MusicManager{
         explicit ArtistKey(int artistID);
         ~ArtistKey()= default;
         int getArtistID();
-        friend bool operator>(ArtistKey &artistKey1,ArtistKey &artistKey2){
-            return artistKey1.artistID>artistKey2.artistID;
-        };
-        friend bool operator<(ArtistKey &artistKey1,ArtistKey &artistKey2){
+        friend bool operator>(const ArtistKey &artistKey1, const ArtistKey &artistKey2){
             return artistKey1.artistID<artistKey2.artistID;
+        };
+        friend bool operator<(const ArtistKey &artistKey1, const ArtistKey &artistKey2){
+            return artistKey1.artistID>artistKey2.artistID;
         };
         friend bool operator==(ArtistKey &artistKey1,ArtistKey &artistKey2){
             return artistKey1.artistID==artistKey2.artistID;
@@ -72,12 +72,15 @@ class MusicManager{
 
     class PlaysData{
         AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*> artistsTree;
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* minID;
 
     public:
 
-        PlaysData()= default;
+        PlaysData();
         ~PlaysData()= default;
         AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*> getArtistTree() const;
+        void setMinID(AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* minID);
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* getMinID ();
     };
 
     class ArtistData{
@@ -99,25 +102,13 @@ class MusicManager{
         AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
         List<int,PlaysData>::ListNode** getPlaysNodes() const ;
         int** getZeroPlays() const ;
-        int getMaxSongID(int maxSongID);
-        int getMaxSongPlays(int maxSongPlays);
-        int getCurrentMaxNotCheckedSong(int maxNotChecked);
+        int getMaxSongID();
+        int getMaxSongPlays() const;
+        int getCurrentMaxNotCheckedSong();
         void setMaxSongID(int maxSongID);
         void setMaxSongPlays(int maxSongPlays);
         void setCurrentMaxNotCheckedSong(int maxNotChecked);
     };
-
-    /*
-    class ArtistReducedData{
-         AVLtree<ArtistKey,ArtistData>::AVLNode* artistNode;
-    public:
-
-        ArtistReducedData()= delete;
-        explicit ArtistReducedData(AVLtree<ArtistKey,ArtistData>::AVLNode* artistNode);
-        ~ArtistReducedData()= default;
-        const AVLtree<ArtistKey,ArtistData>::AVLNode& getArtistNode();
-    };
-    */
 
     // ---------- Properties ---------- //
 

@@ -37,7 +37,7 @@ class AVLtree{
         const Key& getKey() const{
             return key;
         };
-        const Data& getData() const{
+        Data& getData(){
             return data;
         }
         friend bool operator>(AVLNode &node1,AVLNode &node2){
