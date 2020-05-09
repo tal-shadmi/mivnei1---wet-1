@@ -114,6 +114,7 @@ class MusicManager{
 
     AVLtree<ArtistKey,ArtistData> artists;
     List<int,PlaysData> songPlays;
+    int songsCounter;
 
     // ---------- Functions ---------- //
 

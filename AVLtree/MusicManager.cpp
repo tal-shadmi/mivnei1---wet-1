@@ -120,12 +120,14 @@ AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::Ar
 MusicManager::MusicManager() {
     artists = AVLtree<ArtistKey,ArtistData>();
     songPlays = List<int,PlaysData>();
+    songsCounter = 0;
 }
 
 void MusicManager::addArtist(int artistID, int numOfSongs) {
     MusicManager::ArtistData data = MusicManager::ArtistData(numOfSongs);
     MusicManager::ArtistKey key = MusicManager::ArtistKey(artistID);
     artists.insert(key,data);
+    songsCounter+=numOfSongs;
 }
 
 void MusicManager::addToSongCount(int artistID, int songID) {
@@ -199,5 +201,9 @@ void MusicManager::addToSongCount(int artistID, int songID) {
         artist->getData().setMaxSongID(songID);
         artist->getData().setCurrentMaxNotCheckedSong(songID);
     }
+}
 
+void MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *songs) {
+    List<int,PlaysData>::ListNode* lastNode = songPlays.getLast();
+    int counter = 0;
 }
