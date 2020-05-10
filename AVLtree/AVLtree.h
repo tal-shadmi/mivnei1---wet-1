@@ -39,7 +39,7 @@ class AVLtree{
         ~AVLNode() = default;
         const Key& getKey() const{
             return key;
-        };
+        }
         Data& getData(){
             return data;
         }
