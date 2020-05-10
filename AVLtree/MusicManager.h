@@ -58,7 +58,7 @@ class MusicManager{
         ArtistKey()= delete;
         explicit ArtistKey(int artistID);
         ~ArtistKey()= default;
-        int getArtistID();
+        int getArtistID() const;
         friend bool operator>(const ArtistKey &artistKey1, const ArtistKey &artistKey2){
             return artistKey1.artistID<artistKey2.artistID;
         };
@@ -116,7 +116,11 @@ class MusicManager{
     List<int,PlaysData> songPlays;
     int songsCounter;
 
-    // ---------- Functions ---------- //
+    // ---------- private functions ---------- //
+
+
+
+    // ---------- public functions ---------- //
 
     public:
 

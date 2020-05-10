@@ -43,10 +43,10 @@ class AVLtree{
         Data& getData(){
             return data;
         }
-        const AVLNode* getNext() const {
+        AVLNode* getNext() const {
             return next;
         }
-        const AVLNode* getPrevious() const {
+        AVLNode* getPrevious() const {
             return previous;
         }
         friend bool operator>(AVLNode &node1,AVLNode &node2){

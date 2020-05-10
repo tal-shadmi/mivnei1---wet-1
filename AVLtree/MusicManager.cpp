@@ -21,7 +21,7 @@ int MusicManager::SongKey::getSongNumberOfPlays() const {
 
 MusicManager::ArtistKey::ArtistKey(int artistID): artistID(artistID) {}
 
-int MusicManager::ArtistKey::getArtistID() {
+int MusicManager::ArtistKey::getArtistID() const {
     return artistID;
 }
 
@@ -204,6 +204,28 @@ void MusicManager::addToSongCount(int artistID, int songID) {
 }
 
 void MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *songs) {
-    List<int,PlaysData>::ListNode* lastNode = songPlays.getLast();
+    List<int,PlaysData>::ListNode* currentPlaysNode = songPlays.getLast();
+    AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* currentArtistNode = currentPlaysNode->getData().getMinID();
+    const AVLtree<SongKey,int>::AVLNode* currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getCurrentMaxNotCheckedSong()];
     int counter = 0;
+    if (numOfSongs<=songsCounter){
+        while (counter<numOfSongs){
+            if (currentSongNode->getKey().getSongNumberOfPlays()!=currentPlaysNode->getKey()){
+                currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getMaxSongID()];
+            }
+            while (counter<numOfSongs && currentSongNode->getKey().getSongNumberOfPlays()==currentPlaysNode->getKey()){
+                artists[counter] = currentArtistNode->getKey().getArtistID();
+                songs[counter] = currentSongNode->getKey().getSongID();
+                counter++;
+                currentSongNode = currentSongNode->getPrevious();
+            }
+            currentArtistNode->getData()->getData().setCurrentMaxNotCheckedSong(currentSongNode->getKey().getSongID());
+            currentArtistNode = currentArtistNode->getPrevious();
+            if (currentArtistNode== nullptr){
+                currentPlaysNode = currentPlaysNode->getPrevious();
+                currentArtistNode = currentPlaysNode->getData().getMinID();
+            }
+            currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getCurrentMaxNotCheckedSong()];
+        }
+    }
 }
