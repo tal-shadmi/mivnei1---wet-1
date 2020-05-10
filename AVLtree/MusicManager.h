@@ -85,7 +85,7 @@ class MusicManager{
 
     class ArtistData{
         int numberOfSongs;
-        AVLtree<SongKey,int> songs;
+        AVLtree<SongKey,int>* songs;
         AVLtree<SongKey,int>::AVLNode** songNodes;
         List<int,PlaysData>::ListNode** playsNodes;
         int** zeroPlays;
@@ -97,8 +97,9 @@ class MusicManager{
 
         ArtistData()= delete;
         explicit ArtistData(int numberOfSongs);
+            //ArtistData(const ArtistData& data)= delete;
         ~ArtistData();
-        AVLtree<SongKey,int> getSongs() const ;
+        AVLtree<SongKey,int>* getSongs() const ;
         AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
         List<int,PlaysData>::ListNode** getPlaysNodes() const ;
         int getNumberOfSongs();
@@ -113,8 +114,8 @@ class MusicManager{
 
     // ---------- Properties ---------- //
 
-    AVLtree<ArtistKey,ArtistData> artists;
-    List<int,PlaysData> songPlays;
+    AVLtree<ArtistKey,ArtistData>* artists;
+    List<int,PlaysData>* songPlays;
     int songsCounter;
 
     // ---------- private functions ---------- //
