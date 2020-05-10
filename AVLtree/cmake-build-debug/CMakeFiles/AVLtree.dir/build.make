@@ -56,18 +56,18 @@ include CMakeFiles/AVLtree.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/AVLtree.dir/flags.make
 
-CMakeFiles/AVLtree.dir/main.cpp.obj: CMakeFiles/AVLtree.dir/flags.make
-CMakeFiles/AVLtree.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AVLtree.dir/main.cpp.obj"
-	C:\TDM-GCC-32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AVLtree.dir\main.cpp.obj -c C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\main.cpp
+CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj: CMakeFiles/AVLtree.dir/flags.make
+CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj: ../AVLTreeTest.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj"
+	C:\TDM-GCC-32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AVLtree.dir\AVLTreeTest.cpp.obj -c C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\AVLTreeTest.cpp
 
-CMakeFiles/AVLtree.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AVLtree.dir/main.cpp.i"
-	C:\TDM-GCC-32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\main.cpp > CMakeFiles\AVLtree.dir\main.cpp.i
+CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.i"
+	C:\TDM-GCC-32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\AVLTreeTest.cpp > CMakeFiles\AVLtree.dir\AVLTreeTest.cpp.i
 
-CMakeFiles/AVLtree.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AVLtree.dir/main.cpp.s"
-	C:\TDM-GCC-32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\main.cpp -o CMakeFiles\AVLtree.dir\main.cpp.s
+CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.s"
+	C:\TDM-GCC-32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\AVLTreeTest.cpp -o CMakeFiles\AVLtree.dir\AVLTreeTest.cpp.s
 
 CMakeFiles/AVLtree.dir/MusicManager.cpp.obj: CMakeFiles/AVLtree.dir/flags.make
 CMakeFiles/AVLtree.dir/MusicManager.cpp.obj: ../MusicManager.cpp
@@ -84,13 +84,13 @@ CMakeFiles/AVLtree.dir/MusicManager.cpp.s: cmake_force
 
 # Object files for target AVLtree
 AVLtree_OBJECTS = \
-"CMakeFiles/AVLtree.dir/main.cpp.obj" \
+"CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj" \
 "CMakeFiles/AVLtree.dir/MusicManager.cpp.obj"
 
 # External object files for target AVLtree
 AVLtree_EXTERNAL_OBJECTS =
 
-AVLtree.exe: CMakeFiles/AVLtree.dir/main.cpp.obj
+AVLtree.exe: CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj
 AVLtree.exe: CMakeFiles/AVLtree.dir/MusicManager.cpp.obj
 AVLtree.exe: CMakeFiles/AVLtree.dir/build.make
 AVLtree.exe: CMakeFiles/AVLtree.dir/linklibs.rsp

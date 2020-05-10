@@ -25,14 +25,17 @@ class AVLtree{
         AVLNode* father;
         AVLNode* rightSon;
         AVLNode* leftSon;
+        AVLNode* next;
+        AVLNode* previous;
         int height;
 
         public:
 
         explicit AVLNode() = delete;
         AVLNode(AVLNode &node) = default;
-        AVLNode(Key key,Data data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,int height=LEAF_HEIGHT):
-                key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),height(height){}
+        AVLNode(Key key,Data data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,AVLNode* next,
+        AVLNode* previous,int height=LEAF_HEIGHT):
+                key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),next(next),previous(previous),height(height){}
         ~AVLNode() = default;
         const Key& getKey() const{
             return key;
@@ -107,6 +110,14 @@ class AVLtree{
         printf("root key: %d,left son key: %d,right son key: %d,father key: %d \n",
                 root->key,leftSonKey,rightSonKey,fatherKey);
         printTreeInfoInorder(root->rightSon);
+    }
+
+    void printKeysBackwardsInorder(AVLNode* max){
+        AVLNode* current = max;
+        while (current!= nullptr){
+            printf("current key: %d \n",current->getKey());
+            current = current->previous;
+        }
     }
 
     void updateHeights(AVLNode* startNode){
@@ -386,7 +397,9 @@ class AVLtree{
         }
         */
         if (root== nullptr){
-            root=new AVLNode(key, data, nullptr, nullptr, nullptr);
+            root=new AVLNode(key, data, nullptr, nullptr, nullptr, nullptr,
+                             nullptr);
+            //printf("the key: %d, the next key: null, the previous key: null \n",root->getKey());
             return root;
         }
         AVLNode* newAvlNode= nullptr;
@@ -396,16 +409,62 @@ class AVLtree{
                 throw AlreadyExist();
             if (current->key<key) {
                 if (current->rightSon==nullptr){
-                    newAvlNode=new AVLNode(key, data, current, nullptr, nullptr);
+                    newAvlNode=new AVLNode(key, data, current, nullptr, nullptr,
+                                           nullptr, nullptr);
                     current->rightSon=newAvlNode;
+                    if (current->father!= nullptr){
+                        if (current->father->leftSon==current){
+                            current->father->previous = newAvlNode;
+                            newAvlNode->next = current->father;
+                        }
+                        else {
+                            newAvlNode->next = current->next;
+                            if (current->next!= nullptr)
+                                current->next->previous = newAvlNode;
+                        }
+                    }
+                    current->next = newAvlNode;
+                    newAvlNode->previous = current;
+
+                    /*
+                    printf("the key: %d, ",newAvlNode->getKey());
+                    if (newAvlNode->next!= nullptr) printf("the next key: %d, ",newAvlNode->next->getKey());
+                    else printf("the next key: null, ");
+                    if (newAvlNode->previous!= nullptr) printf("the previous key: %d \n",newAvlNode->previous->getKey());
+                    else printf("the previous key: null \n");
+                    */
+
                     break;
                 }
                 current=current->rightSon;
             }
             else {
                 if (current->leftSon== nullptr){
-                    newAvlNode =new AVLNode(key, data, current, nullptr, nullptr);
+                    newAvlNode =new AVLNode(key, data, current, nullptr, nullptr,
+                                            nullptr, nullptr);
                     current->leftSon=newAvlNode;
+                    if (current->father!= nullptr){
+                        if (current->father->rightSon==current){
+                            current->father->next = newAvlNode;
+                            newAvlNode->previous = current->father;
+                        }
+                        else {
+                            newAvlNode->previous = current->previous;
+                            if (current->previous!= nullptr)
+                                current->previous->next = newAvlNode;
+                        }
+                    }
+                    current->previous = newAvlNode;
+                    newAvlNode->next = current;
+
+                    /*
+                    printf("the key: %d, ",newAvlNode->getKey());
+                    if (newAvlNode->next!= nullptr) printf("the next key: %d, ",newAvlNode->next->getKey());
+                    else printf("the next key: null, ");
+                    if (newAvlNode->previous!= nullptr) printf("the previous key: %d \n",newAvlNode->previous->getKey());
+                    else printf("the previous key: null \n");
+                    */
+
                     break;
                 }
                 current=current->leftSon;
@@ -426,6 +485,11 @@ class AVLtree{
         AVLNode* connectionNode;
         while (current!= nullptr){
             if (current->key==key){
+                // updating next and previous properties
+                if (current->previous!= nullptr)
+                    current->previous->next = current->next;
+                if (current->next!= nullptr)
+                    current->next->previous = current->previous;
                 // if the erased node has a father
                 if (current->father!= nullptr){
                     // if the erased node has a left son
@@ -515,14 +579,23 @@ class AVLtree{
     }
 
     void printTree (){
-        printTreeInorder(root);
-        printTreeInfoInorder(root);
+        AVLtree<int,int>::AVLNode* maxNode = findMaxNode();
+        printKeysBackwardsInorder(maxNode);
         printf("\n");
     }
 
     void treeClear (){
         deleteTreePostorder(root);
         root= nullptr;
+    }
+
+    AVLNode* findMaxNode(){
+        if (root== nullptr)
+            return nullptr;
+        AVLNode* current = root;
+        while (current->rightSon!= nullptr)
+            current = current->rightSon;
+        return current;
     }
 
     class NotFound : public exception{};
