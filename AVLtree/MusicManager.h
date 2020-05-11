@@ -7,6 +7,7 @@
 
 #include "AVLtree.h"
 #include "List.h"
+#include "new"
 
 typedef enum {
     SUCCESS = 0,
@@ -130,11 +131,11 @@ class MusicManager{
 
     MusicManager();
     ~MusicManager();
-    void addArtist(int artistID,int numOfSongs);
-    void removeArtist(int artistID);
-    void addToSongCount(int artistID,int songID);
+    StatusType addArtist(int artistID,int numOfSongs);
+    StatusType removeArtist(int artistID);
+    StatusType addToSongCount(int artistID,int songID);
     int numberOfStreams(int artistID,int songID);
-    void getRecommendedSongs(int numOfSongs,int *artists,int *songs);
+    StatusType getRecommendedSongs(int numOfSongs,int *artists,int *songs);
 
 };
 
