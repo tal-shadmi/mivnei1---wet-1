@@ -365,6 +365,10 @@ class AVLtree{
         return RRroll(problemNode);
     };
 
+    class NotFound : public exception{};
+    class BadParameters : public  exception{};
+    class AlreadyExist : public exception{};
+
     public:
 
     explicit AVLtree(){
@@ -604,9 +608,6 @@ class AVLtree{
         return current;
     }
 
-    class NotFound : public exception{};
-    class BadParameters : public  exception{};
-    class AlreadyExist : public exception{};
 };
 
 #endif //AVLTREE_AVLTREE_H
