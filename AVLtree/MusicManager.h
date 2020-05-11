@@ -8,13 +8,7 @@
 #include "AVLtree.h"
 #include "List.h"
 #include "new"
-
-typedef enum {
-    SUCCESS = 0,
-    FAILURE = -1,
-    ALLOCATION_ERROR = -2,
-    INVALID_INPUT = -3
-} StatusType;
+#include "library1.h"
 
 class MusicManager{
 
@@ -100,7 +94,6 @@ class MusicManager{
 
         ArtistData()= delete;
         explicit ArtistData(int numberOfSongs);
-            //ArtistData(const ArtistData& data)= delete;
         ~ArtistData();
         AVLtree<SongKey,int>* getSongs() const ;
         AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
@@ -134,7 +127,7 @@ class MusicManager{
     StatusType addArtist(int artistID,int numOfSongs);
     StatusType removeArtist(int artistID);
     StatusType addToSongCount(int artistID,int songID);
-    int numberOfStreams(int artistID,int songID);
+    StatusType numberOfStreams(int artistID,int songID,int *streams);
     StatusType getRecommendedSongs(int numOfSongs,int *artists,int *songs);
 
 };

@@ -365,10 +365,6 @@ class AVLtree{
         return RRroll(problemNode);
     };
 
-    class NotFound : public exception{};
-    class BadParameters : public  exception{};
-    class AlreadyExist : public exception{};
-
     public:
 
     explicit AVLtree(){
@@ -379,7 +375,7 @@ class AVLtree{
 
     AVLtree (const AVLtree &avltree)= default;
 
-    virtual ~AVLtree(){
+    ~AVLtree(){
         deleteTreePostorder(root);
     };
 
@@ -416,7 +412,7 @@ class AVLtree{
         AVLNode* current = root;
         while (current!= nullptr){
             if (current->key==key)
-                throw AlreadyExist();
+                throw AlreadyExist_AVLtree();
             if (current->key<key) {
                 if (current->rightSon==nullptr){
                     newAvlNode=new AVLNode(key, data, current, nullptr, nullptr,
@@ -568,7 +564,7 @@ class AVLtree{
                 current=current->rightSon;
             else current=current->leftSon;
         }
-        throw NotFound();
+        throw NotFound_AVLtree();
     }
 
     AVLNode* find (Key &key){
@@ -585,7 +581,7 @@ class AVLtree{
                 current=current->rightSon;
             else current=current->leftSon;
         }
-        throw NotFound();
+        throw NotFound_AVLtree();
     }
 
     void printTree (){
@@ -607,6 +603,10 @@ class AVLtree{
             current = current->rightSon;
         return current;
     }
+
+    class NotFound_AVLtree : public exception{};
+    class BadParameters_AVLtree : public  exception{};
+    class AlreadyExist_AVLtree : public exception{};
 
 };
 
