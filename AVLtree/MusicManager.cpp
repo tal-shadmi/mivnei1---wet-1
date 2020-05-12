@@ -382,6 +382,7 @@ StatusType MusicManager::numberOfStreams(int artistID,int songID,int *streams){
     List<int,PlaysData>::ListNode* plays_num_node = playsNodes[songID];
     //the key is the number of plays
     *streams = plays_num_node->getKey();
+    return SUCCESS;
 }
 
 StatusType MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *songs) {

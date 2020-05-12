@@ -50,7 +50,7 @@ StatusType AddToSongCount(void *DS, int artistID, int songID){
 }
 
 StatusType NumberOfStreams(void *DS, int artistID, int songID, int *streams){
-    if (DS == NULL || songID < 0 || artistID <=0 || streams != NULL)
+    if (DS == NULL || songID < 0 || artistID <=0 || streams == NULL)
         return INVALID_INPUT;
     try {
         return ((MusicManager *)DS)->numberOfStreams(artistID,songID,streams);
@@ -61,7 +61,7 @@ StatusType NumberOfStreams(void *DS, int artistID, int songID, int *streams){
 }
 
 StatusType GetRecommendedSongs(void *DS, int numOfSongs, int *artists, int *songs){
-    if (DS == NULL || artists != NULL || artists != songs)
+    if (DS == NULL || artists == NULL || songs == NULL)
         return INVALID_INPUT;
     if (numOfSongs <= 0)
         return ALLOCATION_ERROR;
