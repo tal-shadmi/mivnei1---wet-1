@@ -82,6 +82,7 @@ class MusicManager{
 
     class ArtistData{
         int numberOfSongs;
+        int zeroPlaysSongCounter;
         AVLtree<SongKey,int>* songs;
         AVLtree<SongKey,int>::AVLNode** songNodes;
         List<int,PlaysData>::ListNode** playsNodes;
@@ -99,6 +100,8 @@ class MusicManager{
         AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
         List<int,PlaysData>::ListNode** getPlaysNodes() const ;
         int getNumberOfSongs();
+        void setZeroPlaysSongCounter(int zeroPlaysSongs);
+        int getZeroPlaysSongCounter();
         int** getZeroPlays() const ;
         int getMaxSongID();
         int getMaxSongPlays() const;

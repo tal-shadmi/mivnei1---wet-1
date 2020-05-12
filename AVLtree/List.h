@@ -29,8 +29,8 @@ class List {
 
     class ListNode {
 
-        Key *key;       //will be used for num_of_plays
-        Data *data;     //will be used for artists tree
+        Key &key;       //will be used for num_of_plays
+        Data &data;     //will be used for artists tree
         ListNode *next;
         ListNode *previous;
 
@@ -38,16 +38,16 @@ class List {
 
         explicit ListNode()= default;  // = delete;
 
-        ListNode(Key *key, Data *data, ListNode* next, ListNode *previous):
+        ListNode(Key &key, Data &data, ListNode* next, ListNode *previous):
                 key (key), data(data), next(next), previous(previous){}
 
         ~ListNode() = default;
 
-        const Key* getKey() const {
+        const Key& getKey() const{
             return key;
         }
 
-        Data* getData(){
+        Data& getData(){
             return data;
         }
 
@@ -97,7 +97,7 @@ class List {
         return this->last;
     }
 
-    ListNode *insertFirst(Key *key, Data *data) {
+    ListNode *insertFirst(Key &key, Data &data) {
         /*
         if (key == NULL || data == NULL) {
             throw BadParameters();
@@ -119,7 +119,7 @@ class List {
         return new_element;
     }
 
-    ListNode *insertAfterNode(Key *key, Data *data, ListNode* element) {
+    ListNode *insertAfterNode(Key &key, Data &data, ListNode* element) {
         /*
         if (key == NULL || data == NULL || element == nullptr) {
             throw BadParameters();
@@ -136,7 +136,7 @@ class List {
         return new_element;
     }
 
-    ListNode *findByKey(Key *key) {
+    ListNode *findByKey(Key &key) {
         /*
         if (key == NULL) {
             throw BadParameters();

@@ -585,8 +585,7 @@ class AVLtree{
     }
 
     void printTree (){
-        AVLtree<int,int>::AVLNode* maxNode = findMaxNode();
-        printKeysBackwardsInorder(maxNode);
+        printTreeInorder(root);
         printf("\n");
     }
 
