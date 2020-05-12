@@ -56,7 +56,7 @@ class List {
         }
 
         ListNode* getPrevious() {
-            return next;
+            return previous;
         }
 
         friend bool operator<(ListNode &node1, ListNode &node2) {

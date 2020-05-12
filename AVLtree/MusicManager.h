@@ -42,7 +42,9 @@ class MusicManager{
             else return songKey1.songID>songKey2.songID;
         };
         friend bool operator==(SongKey &songKey1,SongKey &songKey2){
-            return songKey1.songNumberOfPlays==songKey2.songNumberOfPlays;
+            if (songKey1.songNumberOfPlays!=songKey2.songNumberOfPlays)
+                return false;
+            else return songKey1.songID==songKey2.songID;
         };
     };
 
