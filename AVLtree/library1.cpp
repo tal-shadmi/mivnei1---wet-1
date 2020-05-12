@@ -17,7 +17,7 @@ void *Init(){
 }
 
 StatusType AddArtist(void *DS, int artistID, int numOfSongs){
-    if (DS != NULL || numOfSongs<=0 || artistID<=0)
+    if (DS == NULL || numOfSongs<=0 || artistID<=0)
         return INVALID_INPUT;
     try {
         return ((MusicManager *)DS)->addArtist(artistID,numOfSongs);
@@ -28,7 +28,7 @@ StatusType AddArtist(void *DS, int artistID, int numOfSongs){
 }
 
 StatusType RemoveArtist(void *DS, int artistID){
-    if (DS != NULL || artistID <= 0)
+    if (DS == NULL || artistID <= 0)
         return INVALID_INPUT;
     try {
         return ((MusicManager *)DS)->removeArtist(artistID);
@@ -39,7 +39,7 @@ StatusType RemoveArtist(void *DS, int artistID){
 }
 
 StatusType AddToSongCount(void *DS, int artistID, int songID){
-    if (DS != NULL || artistID <= 0)
+    if (DS == NULL || artistID <= 0)
         return INVALID_INPUT;
     try {
         return ((MusicManager *)DS)->addToSongCount(artistID,songID);
@@ -50,7 +50,7 @@ StatusType AddToSongCount(void *DS, int artistID, int songID){
 }
 
 StatusType NumberOfStreams(void *DS, int artistID, int songID, int *streams){
-    if (DS != NULL || songID < 0 || artistID <=0 || streams != NULL)
+    if (DS == NULL || songID < 0 || artistID <=0 || streams != NULL)
         return INVALID_INPUT;
     try {
         return ((MusicManager *)DS)->numberOfStreams(artistID,songID,streams);
@@ -61,8 +61,10 @@ StatusType NumberOfStreams(void *DS, int artistID, int songID, int *streams){
 }
 
 StatusType GetRecommendedSongs(void *DS, int numOfSongs, int *artists, int *songs){
-    if (DS != NULL || numOfSongs <= 0 || artists != NULL || artists != songs)
+    if (DS == NULL || artists != NULL || artists != songs)
         return INVALID_INPUT;
+    if (numOfSongs <= 0)
+        return ALLOCATION_ERROR;
     try {
         return ((MusicManager *)DS)->getRecommendedSongs(numOfSongs,artists,songs);
     }

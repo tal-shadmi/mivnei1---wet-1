@@ -8,5 +8,7 @@ int main() {
             q=17,r=18,s=19,t=20,u=21,v=22,w=23,x=24,y=25,z=26;
     MusicManager *manager = new MusicManager();
     manager->addArtist(123,5);
+    manager->addArtist(456,3);
+    manager->addArtist(123,3);
     return 0;
 }
