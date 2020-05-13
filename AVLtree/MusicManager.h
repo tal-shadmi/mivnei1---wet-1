@@ -100,13 +100,13 @@ class MusicManager{
         ArtistData(ArtistData &artistData);
         explicit ArtistData(int numberOfSongs);
         ~ArtistData();
-        AVLtree<SongKey,int>* getSongs() const ;
-        AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
-        List<int,PlaysData>::ListNode** getPlaysNodes() const ;
+        AVLtree<SongKey,int>* getSongs();
+        AVLtree<SongKey,int>::AVLNode** getSongNodes();
+        List<int,PlaysData>::ListNode** getPlaysNodes();
         int getNumberOfSongs();
         void setZeroPlaysSongCounter(int zeroPlaysSongs);
         int getZeroPlaysSongCounter();
-        int** getZeroPlays() const ;
+        int** getZeroPlays();
         int getMaxSongID();
         int getMaxSongPlays() const;
         int getCurrentMaxNotCheckedSong();
