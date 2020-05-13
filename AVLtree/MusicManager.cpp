@@ -72,8 +72,10 @@ MusicManager::ArtistData::ArtistData(MusicManager::ArtistData &artistData) {
     playsNodes = new List<int,PlaysData>::ListNode*[artistData.numberOfSongs];
     zeroPlays = new int*[artistData.numberOfSongs+1];
     for (int i = 0; i < artistData.numberOfSongs+1; ++i) {
-        songNodes[i]= artistData.songNodes[i];
-        playsNodes[i]= artistData.playsNodes[i];
+        if (i < numberOfSongs){
+            songNodes[i]= artistData.songNodes[i];
+            playsNodes[i]= artistData.playsNodes[i];
+        }
         zeroPlays[i] = new int[2];
         zeroPlays[i][0] = artistData.zeroPlays[i][0];
         zeroPlays[i][1] = artistData.zeroPlays[i][1];
@@ -384,7 +386,7 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
 
 StatusType MusicManager::numberOfStreams(int artistID,int songID,int *streams){
     //get the key
-     MusicManager::ArtistKey artistKey(artistID);
+    MusicManager::ArtistKey artistKey(artistID);
     AVLtree<ArtistKey,ArtistData>::AVLNode* artist;
     try {
         //get the artist node

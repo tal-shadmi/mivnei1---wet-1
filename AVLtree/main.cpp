@@ -10,12 +10,14 @@ int main() {
     int *songs = new int[3];
     MusicManager *manager = new MusicManager();
     manager->addArtist(123,3);
-    manager->removeArtist(123);
-    //manager->addArtist(456,3);
-    //manager->addArtist(123,3);
-    //manager->removeArtist(456);
-    //manager->removeArtist(789);
-    //manager->addToSongCount(123,3);
-    //manager->getRecommendedSongs(3,artist,songs);
+    manager->addArtist(456,3);
+    manager->addArtist(123,3);
+    manager->removeArtist(456);
+    manager->removeArtist(789);
+    manager->addToSongCount(123,3);
+    manager->getRecommendedSongs(3,artist,songs);
+    delete manager;
+    delete [] artist;
+    delete [] songs;
     return 0;
 }
