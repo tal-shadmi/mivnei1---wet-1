@@ -3,21 +3,36 @@
 #include "MusicManager.h"
 
 int main() {
-    //AVLtree<int, int> tree;
-    //int a=1,b=2,c=3,d=4,e=5,f=6,g=7,h=8,i=9,j=10,k=11,l=12,m=13,n=14,o=15,p=16,
-    //        q=17,r=18,s=19,t=20,u=21,v=22,w=23,x=24,y=25,z=26;
     int *artist = new int[3];
     int *songs = new int[3];
+    int stream=999;
     MusicManager *manager = new MusicManager();
-    manager->addArtist(123,3);
-    manager->addArtist(456,3);
-    manager->addArtist(123,3);
-    manager->removeArtist(456);
-    manager->removeArtist(789);
-    manager->addToSongCount(123,3);
-    manager->getRecommendedSongs(3,artist,songs);
-    delete manager;
-    delete [] artist;
-    delete [] songs;
-    return 0;
+    cout << "test 1: " << manager->addArtist(123,3) << endl;
+    cout << "test 2: " << manager->addArtist(456,3) << endl;
+    cout << "test 3: " << manager->addArtist(456,3) << endl;
+    cout << "test 4: " << manager->addArtist(123,4) << endl;
+    cout << "test 5: " << manager->removeArtist(456) << endl;
+    cout << "test 6: " << manager->removeArtist(456) << endl;
+    cout << "test 7: " << manager->addArtist(10,2)<< endl;
+    cout << "test 8: " << manager->addToSongCount(123,3)<< endl;
+    cout << "test 9: " << manager->numberOfStreams(123,3,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    cout << "test 10: "<< manager->numberOfStreams(123,2,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    cout << "test 11: " << manager->addToSongCount(123,2)<< endl;
+    cout << "test 12: " << manager->numberOfStreams(123,2,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    /*  manager->addToSongCount(10,1);
+     manager->addToSongCount(10,1);
+     manager->addToSongCount(123,2);
+     manager->addToSongCount(123,1);
+     manager->getRecommendedSongs(3,artist,songs);
+   */  return 0;
+
+
+     /* SUCCESS = 0,
+     FAILURE = -1,
+     ALLOCATION_ERROR = -2,
+     INVALID_INPUT = -3
+             */
 }
