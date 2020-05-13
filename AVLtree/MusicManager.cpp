@@ -152,7 +152,7 @@ void MusicManager::rankZeroPlaysSongs(int currentPlace , int numOfSongs, int *ar
     int currentZeroPlaysSongID = currentArtistNode->getData()->getData().getZeroPlays()[0][1];
     int counter = 0;
     while (counter < numOfSongs){
-        while (currentZeroPlaysSongID!=INVALID_INDEX){
+        while (currentZeroPlaysSongID!=INVALID_INDEX && counter < numOfSongs){
             artists[currentPlace+counter] = currentArtistNode->getKey().getArtistID();
             songs[currentPlace+counter] = currentZeroPlaysSongID;
             counter++;

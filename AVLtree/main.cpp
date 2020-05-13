@@ -15,8 +15,8 @@ int main() {
     manager->removeArtist(456);
     manager->removeArtist(789);
     manager->addToSongCount(123,3);
-    manager->addToSongCount(123,2);
-    manager->addToSongCount(123,2);
-    //manager->getRecommendedSongs(3,artist,songs);
+    manager->getRecommendedSongs(3,artist,songs);
+    delete [] artist;
+    delete [] songs;
     return 0;
 }

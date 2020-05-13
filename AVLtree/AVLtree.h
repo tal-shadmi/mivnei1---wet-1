@@ -20,8 +20,8 @@ class AVLtree{
 
     class AVLNode{
 
-        Key &key;
-        Data &data;
+        Key key;
+        Data data;
         AVLNode* father;
         AVLNode* rightSon;
         AVLNode* leftSon;
@@ -32,7 +32,7 @@ class AVLtree{
         public:
 
         explicit AVLNode() = delete;
-        AVLNode(AVLNode &node) = default;
+        AVLNode(AVLNode &node) = delete;
         AVLNode(Key &key,Data &data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,AVLNode* next,
         AVLNode* previous,int height=LEAF_HEIGHT):
                 key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),next(next),previous(previous),height(height){}

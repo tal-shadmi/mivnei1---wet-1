@@ -26,7 +26,7 @@ class MusicManager{
         public:
 
         SongKey()= delete;
-        SongKey(SongKey &songKey);
+        SongKey(SongKey &songKey) = default;
         SongKey(int songID,int songNumberOfPlays);
         ~SongKey()= default;
         int getSongID() const;
@@ -54,7 +54,7 @@ class MusicManager{
         public:
 
         ArtistKey()= delete;
-        ArtistKey(ArtistKey &artistKey);
+        ArtistKey(ArtistKey &artistKey)= default;
         explicit ArtistKey(int artistID);
         ~ArtistKey()= default;
         int getArtistID() const;
@@ -76,8 +76,9 @@ class MusicManager{
     public:
 
         PlaysData();
+        PlaysData(PlaysData &playsData);
         ~PlaysData();
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* getArtistTree() const;
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* getArtistTree();
         void setMinID(AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* minID);
         AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* getMinID ();
     };
@@ -96,6 +97,7 @@ class MusicManager{
     public:
 
         ArtistData()= delete;
+        ArtistData(ArtistData &artistData);
         explicit ArtistData(int numberOfSongs);
         ~ArtistData();
         AVLtree<SongKey,int>* getSongs() const ;
@@ -121,7 +123,7 @@ class MusicManager{
 
     // ---------- private functions ---------- //
 
-    void rankZeroPlaysSongs(int currentPlace , int numOfSongs,int *artists,int *songs);
+    void rankZeroPlaysSongs(int currentPlace,int numOfSongs,int *artists,int *songs);
 
     // ---------- public functions ---------- //
 

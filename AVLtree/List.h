@@ -29,8 +29,8 @@ class List {
 
     class ListNode {
 
-        Key &key;       //will be used for num_of_plays
-        Data &data;     //will be used for artists tree
+        Key key;       //will be used for num_of_plays
+        Data data;     //will be used for artists tree
         ListNode *next;
         ListNode *previous;
 
