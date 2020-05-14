@@ -478,7 +478,7 @@ class AVLtree{
         }
         updateHeights(current);
         roll(current);
-        return current;
+        return newAvlNode;
     }
 
     void erase(Key &key){

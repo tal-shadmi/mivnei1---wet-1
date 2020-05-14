@@ -82,15 +82,15 @@ MusicManager::ArtistData::ArtistData(MusicManager::ArtistData &artistData) {
     }
 }
 
-AVLtree<MusicManager::SongKey,int>* MusicManager::ArtistData::getSongs() {
+AVLtree<MusicManager::SongKey,int>* &MusicManager::ArtistData::getSongs() {
     return songs;
 }
 
-AVLtree<MusicManager::SongKey,int>::AVLNode** MusicManager::ArtistData::getSongNodes() {
+AVLtree<MusicManager::SongKey,int>::AVLNode** &MusicManager::ArtistData::getSongNodes() {
     return songNodes;
 }
 
-List<int,MusicManager::PlaysData>::ListNode** MusicManager::ArtistData::getPlaysNodes(){
+List<int,MusicManager::PlaysData>::ListNode** &MusicManager::ArtistData::getPlaysNodes(){
     return playsNodes;
 }
 
@@ -106,7 +106,7 @@ void MusicManager::ArtistData::setZeroPlaysSongCounter(int zeroPlaysSongs) {
     zeroPlaysSongCounter = zeroPlaysSongs;
 }
 
-int** MusicManager::ArtistData::getZeroPlays(){
+int** &MusicManager::ArtistData::getZeroPlays(){
     return zeroPlays;
 }
 
@@ -150,7 +150,7 @@ MusicManager::PlaysData::PlaysData(MusicManager::PlaysData &playsData) {
     artistsTree = new AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>();
 }
 
-AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>* MusicManager::PlaysData::getArtistTree() {
+AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>* &MusicManager::PlaysData::getArtistTree() {
     return artistsTree;
 }
 
@@ -158,7 +158,7 @@ void MusicManager::PlaysData::setMinID(AVLtree<MusicManager::ArtistKey, AVLtree<
     this->minID = minID;
 }
 
-AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* MusicManager::PlaysData::getMinID() {
+AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* &MusicManager::PlaysData::getMinID() {
     return minID;
 }
 
@@ -196,7 +196,7 @@ StatusType MusicManager::addArtist(int artistID, int numOfSongs) {
     AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* artistSave = nullptr;
     MusicManager::ArtistKey artistKey(artistID);
     MusicManager::ArtistData artistData(numOfSongs);
-    AVLtree<ArtistKey,ArtistData>::AVLNode* artist;
+    AVLtree<ArtistKey,ArtistData>::AVLNode* artist = nullptr;
     try {
         artist = artists->insert(artistKey,artistData);
     }

@@ -78,9 +78,9 @@ class MusicManager{
         PlaysData();
         PlaysData(PlaysData &playsData);
         ~PlaysData();
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* getArtistTree();
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* &getArtistTree();
         void setMinID(AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* minID);
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* getMinID ();
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* &getMinID ();
     };
 
     class ArtistData{
@@ -100,13 +100,13 @@ class MusicManager{
         ArtistData(ArtistData &artistData);
         explicit ArtistData(int numberOfSongs);
         ~ArtistData();
-        AVLtree<SongKey,int>* getSongs();
-        AVLtree<SongKey,int>::AVLNode** getSongNodes();
-        List<int,PlaysData>::ListNode** getPlaysNodes();
+        AVLtree<SongKey,int>* &getSongs();
+        AVLtree<SongKey,int>::AVLNode** &getSongNodes();
+        List<int,PlaysData>::ListNode** &getPlaysNodes();
         int getNumberOfSongs();
         void setZeroPlaysSongCounter(int zeroPlaysSongs);
         int getZeroPlaysSongCounter();
-        int** getZeroPlays();
+        int** &getZeroPlays();
         int getMaxSongID();
         int getMaxSongPlays() const;
         int getCurrentMaxNotCheckedSong();
