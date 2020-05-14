@@ -182,7 +182,7 @@ class List {
     }
 
     void printList(){
-        cout << "song plays printing" << endl;
+        cout << "song plays printing:" << endl;
         ListNode *i = first;
         if(i == nullptr){
             cout << "List is empty" << endl;
