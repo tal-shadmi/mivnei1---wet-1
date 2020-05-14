@@ -351,10 +351,10 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
         artist->getData().setZeroPlaysSongCounter(artist->getData().getZeroPlaysSongCounter()-1);
         if (artist->getData().getZeroPlaysSongCounter()==0){
             previousArtistSave = artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->find(artistKey)->getPrevious();
-            songPlays->getFirst()->getData().getArtistTree()->erase(artistKey);
             if(artist->getKey().getArtistID() == artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID()){
                 songPlays->getFirst()->getData().setMinID(previousArtistSave);
             }
+            songPlays->getFirst()->getData().getArtistTree()->erase(artistKey);
         }
     }
 
@@ -366,10 +366,10 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
         if ((artist->getData().getSongNodes()[songID]->getPrevious()== nullptr || artist->getData().getSongNodes()[songID]->getPrevious()->getKey().getSongNumberOfPlays() != artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays() )&&
             (artist->getData().getSongNodes()[songID]->getNext()== nullptr || artist->getData().getSongNodes()[songID]->getNext()->getKey().getSongNumberOfPlays() != artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays() ) ){
             previousArtistSave = artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->find(artistKey)->getPrevious();
-            artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->erase(artistKey);
             if(artist->getKey().getArtistID() == artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID()){
                 artist->getData().getPlaysNodes()[songID]->getData().setMinID(previousArtistSave);
             }
+            artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->erase(artistKey);
         }
 
         // creating a new songNode with updated plays and inserting it to the artist songsTree
