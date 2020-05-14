@@ -18,29 +18,43 @@ int main() {
     cout << "test 8: " << manager->removeArtist(456) << endl;
     cout << "test 9: " << manager->addArtist(10,2)<< endl; //already exists
     cout << "test 10: " << manager->addToSongCount(123,2)<< endl;
+    cout << "test 10: " << manager->addToSongCount(123,2)<< endl;
+    cout << "test 10: " << manager->addToSongCount(120,1)<< endl;
+    cout << "test 10: " << manager->addToSongCount(123,2)<< endl;
     cout << "test 11: " << manager->numberOfStreams(123,2,&stream)<< endl;
     cout << "stream: " << stream << endl;
-    cout << "test 12: "<< manager->numberOfStreams(123,1,&stream)<< endl;
-    cout << "stream: " << stream << endl;
-    cout << "test 13: " << manager->addToSongCount(123,1)<< endl;
-    cout << "test 14: " << manager->numberOfStreams(123,1,&stream)<< endl;
-    cout << "stream: " << stream << endl;
-   /* cout << "test 15: " << manager->getRecommendedSongs(num_of_recommended_songs,artist,songs)<< endl;
+    cout << "test 18: " << manager->getRecommendedSongs(num_of_recommended_songs,artist,songs)<< endl;
     for(int i=0;i<num_of_recommended_songs;i++){
         cout << i << ". artist: " << artist[i] << ", ";
         cout << "song: " << songs[i] << endl;
     }
-   */ cout << "test 16: " << manager->addToSongCount(123,2)<< endl;
-    cout << "test 17: " << manager->numberOfStreams(123,2,&stream)<< endl;
+   /* cout << "test 12: "<< manager->numberOfStreams(123,1,&stream)<< endl;
     cout << "stream: " << stream << endl;
-   /* cout << "test 16: " << manager->addToSongCount(123,2)<< endl;
-    cout << "test 17: " << manager->numberOfStreams(123,2,&stream)<< endl;
+    cout << "test 13: " << manager->addToSongCount(123,1)<< endl;
+    cout << "test 14: " << manager->numberOfStreams(123,1,&stream)<< endl;
     cout << "stream: " << stream << endl;
-    cout << "test 18: " << manager->addToSongCount(456,1) << endl;
-    cout << "test 19: " << manager->numberOfStreams(10,1,&stream)<< endl;
+    cout << "test 15: " << manager->addToSongCount(120,1)<< endl;
+    cout << "test 16: " << manager->numberOfStreams(120,1,&stream)<< endl;
     cout << "stream: " << stream << endl;
-    cout << "test 20: " << manager->addToSongCount(10,1)<< endl;
-    cout << "test 21: " << manager->addToSongCount(115,3)<< endl;
+    cout << "test 17: " << manager->addToSongCount(457,1)<< endl;
+    cout << "test 17: " << manager->addToSongCount(457,1)<< endl;
+    cout << "test 13: " << manager->addToSongCount(123,1)<< endl;
+    cout << "test 18: " << manager->getRecommendedSongs(num_of_recommended_songs,artist,songs)<< endl;
+    for(int i=0;i<num_of_recommended_songs;i++){
+        cout << i << ". artist: " << artist[i] << ", ";
+        cout << "song: " << songs[i] << endl;
+    }
+   /* cout << "test 18: " << manager->addToSongCount(123,2)<< endl;
+    cout << "test 19: " << manager->numberOfStreams(123,2,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    cout << "test 20: " << manager->addToSongCount(123,2)<< endl;
+    cout << "test 21: " << manager->numberOfStreams(123,2,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    cout << "test 22: " << manager->addToSongCount(456,1) << endl;
+    cout << "test 23: " << manager->numberOfStreams(10,1,&stream)<< endl;
+    cout << "stream: " << stream << endl;
+    cout << "test 24: " << manager->addToSongCount(10,1)<< endl;
+    cout << "test 25: " << manager->addToSongCount(115,3)<< endl;
     manager->addToSongCount(10,1);
      manager->addToSongCount(10,1);
      manager->addToSongCount(123,2);
