@@ -111,7 +111,6 @@ class List {
             if (last == first) {               // The list has one element
                 last->previous = new_element;
             } else {                        // The list has more than one element
-                ListNode *tmp = first;
                 first->previous = new_element;
             }
             first = new_element;
