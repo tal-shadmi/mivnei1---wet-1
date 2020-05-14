@@ -167,6 +167,17 @@ AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::Ar
 void MusicManager::rankZeroPlaysSongs(int currentPlace , int numOfSongs, int *artists, int *songs) {
     AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* currentArtistNode = songPlays->getFirst()->getData().getMinID();
     int currentZeroPlaysSongID = currentArtistNode->getData()->getData().getZeroPlays()[0][1];
+    int i=0, next=-2;
+    int id = currentArtistNode->getKey().getArtistID();
+    std::cout << "zero plays of artist: "<< id << std::endl;
+    while(next!=INVALID_INDEX){
+        int prev = currentArtistNode->getData()->getData().getZeroPlays()[i][0];
+        std::cout << "i: " << i << ", ";
+        std::cout << "prev: " << prev << ", ";
+        next = currentArtistNode->getData()->getData().getZeroPlays()[i][1];
+        std::cout << "next: " << next << std::endl;
+        i++;
+    }
     int counter = 0;
     while (counter < numOfSongs){
         while (currentZeroPlaysSongID!=INVALID_INDEX && counter < numOfSongs){
@@ -221,7 +232,7 @@ StatusType MusicManager::addArtist(int artistID, int numOfSongs) {
     }
 
     songsCounter+=numOfSongs;
-
+    this->artists->printArtistsTree();
     return SUCCESS;
 }
 
@@ -262,7 +273,7 @@ StatusType MusicManager::removeArtist(int artistID){
     //remove the artist from the main artists tree
     songsCounter-=artist->getData().getNumberOfSongs();
     artists->erase(artistKey);
-
+    this->artists->printArtistsTree();
     return SUCCESS;
 }
 
@@ -395,7 +406,7 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
     // updating the new playNode of the song if he has a new max artist in his tree
     if (playsSave!= nullptr && (playsSave->getData().getMinID()== nullptr || artist->getKey().getArtistID()>playsSave->getData().getMinID()->getKey().getArtistID()))
         playsSave->getData().setMinID(artistSave);
-
+    this->songPlays->printList();
     return SUCCESS;
 }
 

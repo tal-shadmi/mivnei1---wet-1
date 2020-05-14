@@ -16,7 +16,7 @@ using std::exception;
 template <class Key, class Data>
 class AVLtree{
 
-    public:
+public:
 
     class AVLNode{
 
@@ -29,12 +29,12 @@ class AVLtree{
         AVLNode* previous;
         int height;
 
-        public:
+    public:
 
         explicit AVLNode() = delete;
         AVLNode(AVLNode &node) = delete;
         AVLNode(Key &key,Data &data,AVLNode* father,AVLNode* rightSon,AVLNode* leftSon,AVLNode* next,
-        AVLNode* previous,int height=LEAF_HEIGHT):
+                AVLNode* previous,int height=LEAF_HEIGHT):
                 key(key),data(data),father(father),rightSon(rightSon),leftSon(leftSon),next(next),previous(previous),height(height){}
         ~AVLNode() = default;
         const Key& getKey() const{
@@ -62,7 +62,7 @@ class AVLtree{
         friend class AVLtree;
     };
 
-    private:
+private:
 
     AVLNode* root;
 
@@ -82,7 +82,7 @@ class AVLtree{
         if (root->rightSon== nullptr) rightSonHeight=EMPTY_NODE_HEIGHT;
         else rightSonHeight=root->rightSon->height;
         printf("%d BF: %d Height: %d \n",root->key,
-                leftSonHeight-rightSonHeight,root->height);
+               leftSonHeight-rightSonHeight,root->height);
         if (leftSonHeight-rightSonHeight>=2||leftSonHeight-rightSonHeight<=-2)
             printf("ERROR!!!!!!!!!!!!!!!!!!!!!! \n");
         printTreeInorder(root->rightSon);
@@ -114,7 +114,7 @@ class AVLtree{
         if (root->rightSon== nullptr) rightSonKey=-1;
         else rightSonKey=root->rightSon->key;
         printf("root key: %d,left son key: %d,right son key: %d,father key: %d \n",
-                root->key,leftSonKey,rightSonKey,fatherKey);
+               root->key,leftSonKey,rightSonKey,fatherKey);
         printTreeInfoInorder(root->rightSon);
     }
 
@@ -145,7 +145,7 @@ class AVLtree{
     void roll (AVLNode* startNode){
         AVLNode* current=startNode;
         int leftSonHeight,rightSonHeight,leftSonRightSonHeight,leftSonLeftSonHeight,
-            rightSonLeftSonHeight,rightSonRightSonHeight;
+                rightSonLeftSonHeight,rightSonRightSonHeight;
         while (current!= nullptr){
             if (current->leftSon== nullptr) leftSonHeight=EMPTY_NODE_HEIGHT;
             else leftSonHeight=current->leftSon->height;
@@ -182,9 +182,9 @@ class AVLtree{
         //printf("RR on %d \n",problemNode->key);
 
         int problemNodeLeftSonHeight,problemNodeRightSonHeight,BRightSonHeight,BLeftSonHeight,
-            problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
-            problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
-            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
+                problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
+                problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
+                problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* B=problemNode->rightSon;
         AVLNode* BL=problemNode->rightSon->leftSon;
@@ -271,9 +271,9 @@ class AVLtree{
         //printf("LL on %d \n",problemNode->key);
 
         int problemNodeLeftSonHeight,problemNodeRightSonHeight,ARightSonHeight,ALeftSonHeight,
-            problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
-            problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
-            problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
+                problemNodeFatherRightSonHeight,problemNodeFatherLeftSonHeight,
+                problemNodeLeftSonLeftSonHeight,problemNodeLeftSonRightSonHeight,
+                problemNodeRightSonLeftSonHeight,problemNodeRightSonRightSonHeight;
         AVLNode* problemNodeFather= problemNode->father;
         AVLNode* A=problemNode->leftSon;
         AVLNode* AR=problemNode->leftSon->rightSon;
@@ -365,7 +365,7 @@ class AVLtree{
         return RRroll(problemNode);
     };
 
-    public:
+public:
 
     explicit AVLtree(){
         root = nullptr;
@@ -478,7 +478,7 @@ class AVLtree{
         }
         updateHeights(current);
         roll(current);
-        return current;
+        return newAvlNode;
     }
 
     void erase(Key &key){
@@ -515,7 +515,7 @@ class AVLtree{
                         updateHeights(connectionNode);
                         roll(connectionNode);
                     }
-                    //if the erased node has no left son
+                        //if the erased node has no left son
                     else {
                         //connecting the erase node father to the erased node right son
                         if (current->father->key>current->key)
@@ -533,7 +533,7 @@ class AVLtree{
 
                     }
                 }
-                // if the erased node has no father
+                    // if the erased node has no father
                 else {
                     // if the erased node has a left son
                     if (current->leftSon!= nullptr){
@@ -549,7 +549,7 @@ class AVLtree{
                         updateHeights(connectionNode);
                         roll(connectionNode);
                     }
-                    // if the erased node has no left son
+                        // if the erased node has no left son
                     else {
                         root=current->rightSon;
                         if (current->rightSon!= nullptr){
@@ -582,6 +582,31 @@ class AVLtree{
             else current=current->leftSon;
         }
         throw NotFound_AVLtree();
+    }
+
+    void my_print_artists_tree(AVLNode* root){
+        if(root == nullptr){
+            return;
+        }
+        std::cout << "key: " << root->key.getArtistID() << ", ";
+        if(root->leftSon!= nullptr){
+            std::cout << "left: " << root->leftSon->key.getArtistID()<< ", ";
+        }
+        else{
+            std::cout << "left: NULL" << ", ";
+        }
+        if(root->rightSon!= nullptr){
+            std::cout << "right: " << root->rightSon->key.getArtistID() << std::endl;
+        }
+        else{
+            std::cout << "right: NULL" << std::endl;
+        }
+        my_print_artists_tree(root->leftSon);
+        my_print_artists_tree(root->rightSon);
+    }
+
+    void printArtistsTree (){
+        my_print_artists_tree(this->root);
     }
 
     void printTree (){

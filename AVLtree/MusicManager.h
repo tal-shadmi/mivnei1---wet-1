@@ -23,7 +23,7 @@ class MusicManager{
         int songID;
         int songNumberOfPlays;
 
-        public:
+    public:
 
         SongKey()= delete;
         SongKey(SongKey &songKey) = default;
@@ -51,7 +51,7 @@ class MusicManager{
     class ArtistKey{
         int artistID;
 
-        public:
+    public:
 
         ArtistKey()= delete;
         ArtistKey(ArtistKey &artistKey)= default;
@@ -78,9 +78,9 @@ class MusicManager{
         PlaysData();
         PlaysData(PlaysData &playsData);
         ~PlaysData();
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* getArtistTree();
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* &getArtistTree();
         void setMinID(AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* minID);
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* getMinID ();
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* &getMinID ();
     };
 
     class ArtistData{
@@ -100,13 +100,13 @@ class MusicManager{
         ArtistData(ArtistData &artistData);
         explicit ArtistData(int numberOfSongs);
         ~ArtistData();
-        AVLtree<SongKey,int>* getSongs() const ;
-        AVLtree<SongKey,int>::AVLNode** getSongNodes() const ;
-        List<int,PlaysData>::ListNode** getPlaysNodes() const ;
+        AVLtree<SongKey,int>* &getSongs();
+        AVLtree<SongKey,int>::AVLNode** &getSongNodes();
+        List<int,PlaysData>::ListNode** &getPlaysNodes();
         int getNumberOfSongs();
         void setZeroPlaysSongCounter(int zeroPlaysSongs);
         int getZeroPlaysSongCounter();
-        int** getZeroPlays() const ;
+        int** &getZeroPlays();
         int getMaxSongID();
         int getMaxSongPlays() const;
         int getCurrentMaxNotCheckedSong();
@@ -127,7 +127,7 @@ class MusicManager{
 
     // ---------- public functions ---------- //
 
-    public:
+public:
 
     MusicManager();
     ~MusicManager();
