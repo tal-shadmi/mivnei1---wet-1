@@ -2,10 +2,14 @@
 #include "AVLtree.h"
 #include "MusicManager.h"
 
-#define num_of_recommended_songs 7
+#define num_of_recommended_songs 3
 int main() {
     int *artist = new int[num_of_recommended_songs];
     int *songs = new int[num_of_recommended_songs];
+    for(int i=0;i<num_of_recommended_songs;i++){
+        artist[i] = -999;
+        songs[i] = -999;
+    }
     int stream=999;
     MusicManager *manager = new MusicManager();
     cout << "test 1: " << manager->addArtist(115,3)<< endl;
@@ -25,7 +29,7 @@ int main() {
     cout << "test 11: " << manager->removeArtist(115) << endl;
     cout << "test 12: " << manager->addArtist(150,1) << endl;
     cout << "test 13: " << manager->addToSongCount(123,1)<< endl;
-    cout << "test 14: " << manager->numberOfStreams(115,2,&stream)<< endl;
+    cout << "test 14: " << manager->numberOfStreams(115,2,&stream)<< endl; //failure
     cout << "stream: " << stream << endl;
     cout << "test 15: " << manager->addArtist(115,2)<< endl;
     cout << "test 16: " << manager->addToSongCount(115,0)<< endl;

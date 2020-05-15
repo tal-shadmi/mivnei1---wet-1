@@ -264,10 +264,10 @@ StatusType MusicManager::removeArtist(int artistID){
 
                 data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getArtistTree()->erase(artistKey);
                 // remove the playsNode if his artist Tree is empty
+                currentNumberOfPlays = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey();
                 if (data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getArtistTree()->getRoot() == nullptr){
                     songPlays->erase(data.getPlaysNodes()[currentSongNode->getKey().getSongID()]);
                 }
-                currentNumberOfPlays = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey();
             }
             currentSongNode = currentSongNode->getPrevious();
         }
