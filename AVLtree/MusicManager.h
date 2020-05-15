@@ -80,7 +80,7 @@ class MusicManager{
         ~PlaysData();
         AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>* &getArtistTree();
         void setMinID(AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode *minID);
-        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* getMinID();
+        AVLtree<ArtistKey,AVLtree<ArtistKey,ArtistData>::AVLNode*>::AVLNode* &getMinID();
     };
 
     class ArtistData{

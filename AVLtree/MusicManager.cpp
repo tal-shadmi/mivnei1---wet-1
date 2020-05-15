@@ -158,7 +158,7 @@ void MusicManager::PlaysData::setMinID(AVLtree<MusicManager::ArtistKey, AVLtree<
     this->minID = minID;
 }
 
-AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* MusicManager::PlaysData::getMinID() {
+AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* &MusicManager::PlaysData::getMinID() {
     return minID;
 }
 
@@ -215,8 +215,11 @@ StatusType MusicManager::addArtist(int artistID, int numOfSongs) {
         songPlays->getFirst()->getData().setMinID(artistSave);
     } else {
         artistSave = songPlays->getFirst()->getData().getArtistTree()->insert(artistKey,artist);
-        if (artist->getKey()>songPlays->getFirst()->getData().getMinID()->getKey())
+        if (artist->getKey()>songPlays->getFirst()->getData().getMinID()->getKey()){
             songPlays->getFirst()->getData().setMinID(artistSave);
+            //test
+            songPlays->getFirst()->getData().getMinID()->getData();
+        }
     }
 
     for (int i = 0; i < numOfSongs; ++i) {
@@ -229,6 +232,7 @@ StatusType MusicManager::addArtist(int artistID, int numOfSongs) {
 }
 
 StatusType MusicManager::removeArtist(int artistID){
+    int songCounter=0;
     // get the key
     MusicManager::ArtistKey artistKey(artistID);
 
@@ -252,24 +256,38 @@ StatusType MusicManager::removeArtist(int artistID){
         if (artist->getKey().getArtistID() == songPlays->getFirst()->getData().getMinID()->getKey().getArtistID())
             songPlays->getFirst()->getData().setMinID(previousArtistSave);
         songPlays->getFirst()->getData().getArtistTree()->erase(artistKey);
+        if ( songPlays->getFirst()->getData().getArtistTree()->getRoot() == nullptr){
+            songPlays->erase(songPlays->getFirst());
+        }
     }
     else {
         int currentNumberOfPlays = -1;
-        while (currentSongNode->getPrevious() != nullptr){
+        while (currentSongNode != nullptr){
             if (currentNumberOfPlays != data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey()){
 
                 previousArtistSave = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getMinID()->getPrevious();
-                if (artist->getKey().getArtistID() == data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getMinID()->getKey().getArtistID())
+                if (artist->getKey().getArtistID() == data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getMinID()->getKey().getArtistID()){
                     data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().setMinID(previousArtistSave);
+                }
 
                 data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getArtistTree()->erase(artistKey);
                 // remove the playsNode if his artist Tree is empty
+                currentNumberOfPlays = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey();
                 if (data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getArtistTree()->getRoot() == nullptr){
                     songPlays->erase(data.getPlaysNodes()[currentSongNode->getKey().getSongID()]);
                 }
-                currentNumberOfPlays = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey();
             }
             currentSongNode = currentSongNode->getPrevious();
+            songCounter++;
+        }
+        if (songCounter!=artist->getData().getNumberOfSongs()){
+            previousArtistSave = songPlays->getFirst()->getData().getMinID()->getPrevious();
+            if (artist->getKey().getArtistID() == songPlays->getFirst()->getData().getMinID()->getKey().getArtistID()){
+                songPlays->getFirst()->getData().setMinID(previousArtistSave);
+            }
+            if ( songPlays->getFirst()->getData().getArtistTree()->getRoot() == nullptr){
+                songPlays->erase(songPlays->getFirst());
+            }
         }
     }
     //remove the artist from the main artists tree
@@ -355,16 +373,20 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
         }
 
         // updating the new playNode of the song if he has a new max artist in his tree
-        if (playsSave!= nullptr && (playsSave->getData().getMinID()== nullptr || artist->getKey().getArtistID()<playsSave->getData().getMinID()->getKey().getArtistID()))
+        if (playsSave!= nullptr && (playsSave->getData().getMinID()== nullptr || artist->getKey().getArtistID()<playsSave->getData().getMinID()->getKey().getArtistID())){
             playsSave->getData().setMinID(artistSave);
+            //test
+            playsSave->getData().getMinID()->getData();
+        }
 
         // update the artist counter for songs with zero plays, if the artist has no more songs with 0 plays
         // erase the artist from the 0 plays playNode and set a new max artist for this playNode
         artist->getData().setZeroPlaysSongCounter(artist->getData().getZeroPlaysSongCounter()-1);
         if (artist->getData().getZeroPlaysSongCounter()==0){
             previousArtistSave = artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->find(artistKey)->getPrevious();
-            if (artist->getKey().getArtistID()==artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID())
+            if (artist->getKey().getArtistID()==artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID()){
                 songPlays->getFirst()->getData().setMinID(previousArtistSave);
+            }
             songPlays->getFirst()->getData().getArtistTree()->erase(artistKey);
         }
     }
@@ -377,8 +399,9 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
         if ((artist->getData().getSongNodes()[songID]->getPrevious()== nullptr || artist->getData().getSongNodes()[songID]->getPrevious()->getKey().getSongNumberOfPlays() != artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays() )&&
             (artist->getData().getSongNodes()[songID]->getNext()== nullptr || artist->getData().getSongNodes()[songID]->getNext()->getKey().getSongNumberOfPlays() != artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays() ) ){
             previousArtistSave = artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->find(artistKey)->getPrevious();
-            if (artist->getKey().getArtistID()==artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID())
+            if (artist->getKey().getArtistID()==artist->getData().getPlaysNodes()[songID]->getData().getMinID()->getKey().getArtistID()){
                 artist->getData().getPlaysNodes()[songID]->getData().setMinID(previousArtistSave);
+            }
             artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->erase(artistKey);
         }
 
@@ -405,15 +428,15 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
             if ((artist->getData().getSongNodes()[songID]->getNext() == nullptr || artist->getData().getSongNodes()[songID]->getNext()->getKey().getSongNumberOfPlays()!=artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays() ) &&
                 ( artist->getData().getSongNodes()[songID]->getPrevious() == nullptr || artist->getData().getSongNodes()[songID]->getPrevious()->getKey().getSongNumberOfPlays()!=artist->getData().getSongNodes()[songID]->getKey().getSongNumberOfPlays())){
                 artistSave = artist->getData().getPlaysNodes()[songID]->getNext()->getData().getArtistTree()->insert(artistKey,artist);
-                if (artistSave!= nullptr && artistSave->getKey()>artist->getData().getPlaysNodes()[songID]->getNext()->getData().getMinID()->getKey())
+                if (artistSave!= nullptr && artistSave->getKey()>artist->getData().getPlaysNodes()[songID]->getNext()->getData().getMinID()->getKey()){
                     artist->getData().getPlaysNodes()[songID]->getNext()->getData().setMinID(artistSave);
+                }
             }
         }
     }
 
     // erasing current playNode if it is empty, if not finding a new max artist for the the current playNode
     if (artist->getData().getPlaysNodes()[songID]->getData().getArtistTree()->getRoot()==nullptr){
-        //playsSave = artist->getData().getPlaysNodes()[songID]->getNext();
         songPlays->erase(artist->getData().getPlaysNodes()[songID]);
     }
 
