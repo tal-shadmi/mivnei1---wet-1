@@ -47,10 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree
+CMAKE_SOURCE_DIR = C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug\CMakeFiles C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree\cmake-build-debug\CMakeFiles C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,33 +122,6 @@ AVLtree/fast:
 	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/build
 .PHONY : AVLtree/fast
 
-AVLTreeTest.obj: AVLTreeTest.cpp.obj
-
-.PHONY : AVLTreeTest.obj
-
-# target to build an object file
-AVLTreeTest.cpp.obj:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj
-.PHONY : AVLTreeTest.cpp.obj
-
-AVLTreeTest.i: AVLTreeTest.cpp.i
-
-.PHONY : AVLTreeTest.i
-
-# target to preprocess a source file
-AVLTreeTest.cpp.i:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.i
-.PHONY : AVLTreeTest.cpp.i
-
-AVLTreeTest.s: AVLTreeTest.cpp.s
-
-.PHONY : AVLTreeTest.s
-
-# target to generate assembly for a file
-AVLTreeTest.cpp.s:
-	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.s
-.PHONY : AVLTreeTest.cpp.s
-
 MusicManager.obj: MusicManager.cpp.obj
 
 .PHONY : MusicManager.obj
@@ -176,6 +149,60 @@ MusicManager.cpp.s:
 	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/MusicManager.cpp.s
 .PHONY : MusicManager.cpp.s
 
+library1.obj: library1.cpp.obj
+
+.PHONY : library1.obj
+
+# target to build an object file
+library1.cpp.obj:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/library1.cpp.obj
+.PHONY : library1.cpp.obj
+
+library1.i: library1.cpp.i
+
+.PHONY : library1.i
+
+# target to preprocess a source file
+library1.cpp.i:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/library1.cpp.i
+.PHONY : library1.cpp.i
+
+library1.s: library1.cpp.s
+
+.PHONY : library1.s
+
+# target to generate assembly for a file
+library1.cpp.s:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/library1.cpp.s
+.PHONY : library1.cpp.s
+
+main1.obj: main1.cpp.obj
+
+.PHONY : main1.obj
+
+# target to build an object file
+main1.cpp.obj:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main1.cpp.obj
+.PHONY : main1.cpp.obj
+
+main1.i: main1.cpp.i
+
+.PHONY : main1.i
+
+# target to preprocess a source file
+main1.cpp.i:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main1.cpp.i
+.PHONY : main1.cpp.i
+
+main1.s: main1.cpp.s
+
+.PHONY : main1.s
+
+# target to generate assembly for a file
+main1.cpp.s:
+	$(MAKE) -f CMakeFiles\AVLtree.dir\build.make CMakeFiles/AVLtree.dir/main1.cpp.s
+.PHONY : main1.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -185,12 +212,15 @@ help:
 	@echo ... AVLtree
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... AVLTreeTest.obj
-	@echo ... AVLTreeTest.i
-	@echo ... AVLTreeTest.s
 	@echo ... MusicManager.obj
 	@echo ... MusicManager.i
 	@echo ... MusicManager.s
+	@echo ... library1.obj
+	@echo ... library1.i
+	@echo ... library1.s
+	@echo ... main1.obj
+	@echo ... main1.i
+	@echo ... main1.s
 .PHONY : help
 
 

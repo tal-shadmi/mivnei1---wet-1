@@ -1,4 +1,4 @@
-"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/TDM-GCC-32/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/TDM-GCC-32/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/TDM-GCC-32/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\Dell\CLionProjects\mivnei1---wet-1\AVLtree
+"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/TDM-GCC-32/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/TDM-GCC-32/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/TDM-GCC-32/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\Dell\CLionProjects\mivnei1---wet-1-V2\AVLtree
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug
+-- Build files have been written to: C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/cmake-build-debug

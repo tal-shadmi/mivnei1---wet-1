@@ -124,6 +124,7 @@ class MusicManager{
     // ---------- private functions ---------- //
 
     void rankZeroPlaysSongs(int currentPlace,int numOfSongs,int *artists,int *songs);
+    void setBackCurrentMaxNotCheckedSong(int numOfSongs);
 
     // ---------- public functions ---------- //
 

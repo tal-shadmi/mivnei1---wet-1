@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/AVLTreeTest.cpp" "C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug/CMakeFiles/AVLtree.dir/AVLTreeTest.cpp.obj"
-  "C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/MusicManager.cpp" "C:/Users/Dell/CLionProjects/mivnei1---wet-1/AVLtree/cmake-build-debug/CMakeFiles/AVLtree.dir/MusicManager.cpp.obj"
+  "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/MusicManager.cpp" "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/cmake-build-debug/CMakeFiles/AVLtree.dir/MusicManager.cpp.obj"
+  "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/library1.cpp" "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/cmake-build-debug/CMakeFiles/AVLtree.dir/library1.cpp.obj"
+  "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/main1.cpp" "C:/Users/Dell/CLionProjects/mivnei1---wet-1-V2/AVLtree/cmake-build-debug/CMakeFiles/AVLtree.dir/main1.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
