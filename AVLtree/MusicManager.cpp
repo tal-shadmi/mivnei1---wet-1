@@ -261,8 +261,8 @@ StatusType MusicManager::removeArtist(int artistID){
     else {
         int currentNumberOfPlays = -1;
         while (currentSongNode != nullptr){
-            if (currentNumberOfPlays != data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey()){
-
+            //if (currentNumberOfPlays != data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getKey()){
+            if (currentSongNode->getKey().getSongNumberOfPlays() != currentNumberOfPlays){
                 previousArtistSave = data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getMinID()->getPrevious();
                 if (artist->getKey().getArtistID() == data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().getMinID()->getKey().getArtistID()){
                     data.getPlaysNodes()[currentSongNode->getKey().getSongID()]->getData().setMinID(previousArtistSave);
@@ -470,6 +470,7 @@ StatusType MusicManager::numberOfStreams(int artistID,int songID,int *streams){
 
 StatusType MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *songs) {
     List<int,PlaysData>::ListNode* currentPlaysNode = songPlays->getLast();
+    // if the last playNode key is 0 then all the songs have 0 plays so we will go straight to ranking the songs with zero plays
     if (numOfSongs<=songsCounter){
         if (currentPlaysNode->getKey()==0){
             rankZeroPlaysSongs(0,numOfSongs,artists,songs);
@@ -479,17 +480,22 @@ StatusType MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *
     AVLtree<MusicManager::ArtistKey,AVLtree<MusicManager::ArtistKey,MusicManager::ArtistData>::AVLNode*>::AVLNode* currentArtistNode = currentPlaysNode->getData().getMinID();
     AVLtree<SongKey,int>::AVLNode* currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getCurrentMaxNotCheckedSong()];
     int counter = 0;
+
     if (numOfSongs<=songsCounter){
+
         while (counter<numOfSongs){
+
             if (currentSongNode->getKey().getSongNumberOfPlays()!=currentPlaysNode->getKey()){
                 currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getMaxSongID()];
             }
+
             while (counter<numOfSongs && currentSongNode!= nullptr && currentSongNode->getKey().getSongNumberOfPlays()==currentPlaysNode->getKey()){
                 artists[counter] = currentArtistNode->getKey().getArtistID();
                 songs[counter] = currentSongNode->getKey().getSongID();
                 counter++;
                 currentSongNode = currentSongNode->getPrevious();
             }
+
             if (counter==numOfSongs)
                 return SUCCESS;
             if (currentSongNode== nullptr){
@@ -497,8 +503,10 @@ StatusType MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *
             } else {
                 currentArtistNode->getData()->getData().setCurrentMaxNotCheckedSong(currentSongNode->getKey().getSongID());
             }
+
             currentArtistNode = currentArtistNode->getPrevious();
-            if (currentArtistNode== nullptr){
+
+            if (currentArtistNode == nullptr){
                 currentPlaysNode = currentPlaysNode->getPrevious();
                 if (currentPlaysNode->getKey()==0){
                     rankZeroPlaysSongs(counter,numOfSongs-counter,artists,songs);
@@ -506,6 +514,7 @@ StatusType MusicManager::getRecommendedSongs(int numOfSongs, int *artists, int *
                 }
                 currentArtistNode = currentPlaysNode->getData().getMinID();
             }
+
             currentSongNode = currentArtistNode->getData()->getData().getSongNodes()[currentArtistNode->getData()->getData().getCurrentMaxNotCheckedSong()];
         }
     }

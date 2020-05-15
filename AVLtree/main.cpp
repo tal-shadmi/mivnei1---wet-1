@@ -70,6 +70,7 @@ int main() {
         printf("artist number %d : %d, song number %d : %d \n",i+1,artists[i],i+1,songs[i]);
     }
     */
+    /*
     cout << "test 1: " << manager->addArtist(115,2)<< endl;
     cout << "test 2: " << manager->addArtist(10,2)<< endl;
     cout << "test 2: " << manager->addArtist(15,2)<< endl;
@@ -96,6 +97,13 @@ int main() {
     for (int i = 0; i < 4; ++i) {
         printf("artist number %d : %d, song number %d : %d \n",i+1,artists[i],i+1,songs[i]);
     }
+    */
+    cout << "test 1: " << manager->addArtist(115,3)<< endl;
+    cout << "test 2: " << manager->addToSongCount(115,1)<< endl;
+    cout << "test 3: " << manager->addToSongCount(115,0)<< endl;
+    cout << "test 4: " << manager->addToSongCount(115,1)<< endl;
+    cout << "test 5: " << manager->addToSongCount(115,2)<< endl;
+    cout << "test 6: " << manager->removeArtist(115)<< endl;
     delete [] artists;
     delete [] songs;
     delete manager;
