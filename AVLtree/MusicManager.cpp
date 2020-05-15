@@ -217,8 +217,6 @@ StatusType MusicManager::addArtist(int artistID, int numOfSongs) {
         artistSave = songPlays->getFirst()->getData().getArtistTree()->insert(artistKey,artist);
         if (artist->getKey()>songPlays->getFirst()->getData().getMinID()->getKey()){
             songPlays->getFirst()->getData().setMinID(artistSave);
-            //test
-            songPlays->getFirst()->getData().getMinID()->getData();
         }
     }
 
@@ -285,6 +283,7 @@ StatusType MusicManager::removeArtist(int artistID){
             if (artist->getKey().getArtistID() == songPlays->getFirst()->getData().getMinID()->getKey().getArtistID()){
                 songPlays->getFirst()->getData().setMinID(previousArtistSave);
             }
+            songPlays->getFirst()->getData().getArtistTree()->erase(artistKey);
             if ( songPlays->getFirst()->getData().getArtistTree()->getRoot() == nullptr){
                 songPlays->erase(songPlays->getFirst());
             }
@@ -350,8 +349,9 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
 
             // inserting the artist to the artist tree of the playsNode if it is not already in there
             if ((newSongNode->getNext() == nullptr || newSongNode->getNext()->getKey().getSongNumberOfPlays()!=newSongNode->getKey().getSongNumberOfPlays() ) &&
-                ( newSongNode->getPrevious() == nullptr || newSongNode->getPrevious()->getKey().getSongNumberOfPlays()!=newSongNode->getKey().getSongNumberOfPlays()))
+                ( newSongNode->getPrevious() == nullptr || newSongNode->getPrevious()->getKey().getSongNumberOfPlays()!=newSongNode->getKey().getSongNumberOfPlays())){
                 artistSave = playsSave->getData().getArtistTree()->insert(artistKey,artist);
+            }
         }
 
         // if the songPlays node for 1 plays does already exist and it is the first one on the list
@@ -375,8 +375,6 @@ StatusType MusicManager::addToSongCount(int artistID, int songID) {
         // updating the new playNode of the song if he has a new max artist in his tree
         if (playsSave!= nullptr && (playsSave->getData().getMinID()== nullptr || artist->getKey().getArtistID()<playsSave->getData().getMinID()->getKey().getArtistID())){
             playsSave->getData().setMinID(artistSave);
-            //test
-            playsSave->getData().getMinID()->getData();
         }
 
         // update the artist counter for songs with zero plays, if the artist has no more songs with 0 plays
